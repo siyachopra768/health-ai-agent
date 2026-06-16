@@ -1,0 +1,58 @@
+[
+  {
+    "name": "AIIMS Delhi",
+    "city": "Delhi",
+    "specialties": ["Endocrinologist", "Hematologist", "Internal Medicine"],
+    "rating": 4.8,
+    "experience": 25,
+    "consultation_fee": 500
+  },
+  {
+    "name": "Apollo Hospital Delhi",
+    "city": "Delhi",
+    "specialties": ["Endocrinologist", "General Physician"],
+    "rating": 4.6,
+    "experience": 20,
+    "consultation_fee": 800
+  },
+  {
+    "name": "Fortis Hospital Delhi",
+    "city": "Delhi",
+    "specialties": ["Internal Medicine", "Endocrinologist"],
+    "rating": 4.5,
+    "experience": 18,
+    "consultation_fee": 700
+  },
+  {
+    "name": "Medanta Hospital Gurgaon",
+    "city": "Gurgaon",
+    "specialties": ["Hematologist", "Internal Medicine"],
+    "rating": 4.7,
+    "experience": 22,
+    "consultation_fee": 900
+  },
+  {
+    "name": "SMS Medical College Jaipur",
+    "city": "Jaipur",
+    "specialties": ["General Physician", "Internal Medicine"],
+    "rating": 4.3,
+    "experience": 15,
+    "consultation_fee": 300
+  },
+  {
+    "name": "Kota Government Hospital",
+    "city": "Kota",
+    "specialties": ["General Physician"],
+    "rating": 4.0,
+    "experience": 12,
+    "consultation_fee": 100
+  },
+  {
+    "name": "Sudha Hospital Kota",
+    "city": "Kota",
+    "specialties": ["General Physician", "Internal Medicine"],
+    "rating": 4.2,
+    "experience": 14,
+    "consultation_fee": 400
+  }
+]
