@@ -1,6 +1,7 @@
 from langchain_groq import ChatGroq
 import os
 
+
 # -----------------------------
 # 🤖 LLM
 # -----------------------------
@@ -19,6 +20,16 @@ def analyze_values(parsed):
     results = {}
 
     for test, info in parsed.items():
+        if info is None:
+            results[test] = { 
+                "value":None,
+                "status" : "not_available",
+                "severity":0,
+                "note":"value could not be reliably extracted"
+                
+            }
+            continue
+
         value = info["value"]
         low = info["ref_low"]
         high = info["ref_high"]
@@ -50,10 +61,15 @@ def calculate_risk_score(analysis):
     count = 0
 
     for test, info in analysis.items():
+        if info.get("status") == "not_available":
+            continue
         total_severity += info["severity"]
         count += 1
 
-    avg_severity = total_severity / (count + 1e-6)
+    if count == 0:
+        return 0,"⚠️ Insufficient data to assess risk"
+    
+    avg_severity = total_severity / count
     score = int(min(avg_severity * 100, 100))
 
     if score > 70:

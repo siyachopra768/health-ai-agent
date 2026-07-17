@@ -1,8 +1,11 @@
+
+
 import streamlit as st
 import json
 import re
+import hashlib
 
-from parser import load_pdf, extract_lab_values
+from parser import LabValueExtractor
 from utils import get_llm, analyze_values, calculate_risk_score
 
 # =========================================================
@@ -41,10 +44,16 @@ USER
 {input}
 
 RULES:
-- Use report if available
+- First check: is the USER message actually about the patient's health, report, symptoms, or hospital/appointment topics?
+- If the USER message is unrelated to health/reports/appointments, respond only with: "I can only help with your medical report, symptoms, or hospital appointments. Please ask something related to that."
+- Do NOT summarize or reference the report unless the question is actually about it.
+- Use report if available and the question is relevant to it
 - Suggest doctor type first if needed
 - Use only given hospitals
 - Be concise and helpful
+
+IMPORTANT: Output ONLY your final answer to the user. Do NOT repeat, echo, or reference the section headers (HISTORY, REPORT, HOSPITALS, USER) or any part of this prompt in your response.
+
 """)
 
 chain = prompt | llm
@@ -73,6 +82,17 @@ for key, default in {
 # =========================================================
 # 🔧 HELPERS
 # =========================================================
+def clean_response(text):
+    for marker in ["HISTORY\n===","REPORT\n===","HOSPITALS\n===","USER\n==="]:
+        if marker in text:
+            text = text.split(marker)[-1]
+    return text.strip()        
+
+
+
+
+
+
 def extract_time(text):
     match = re.search(r'(\d{1,2})\s*(am|pm)', text.lower())
     return f"{match.group(1)} {match.group(2).upper()}" if match else None
@@ -132,8 +152,16 @@ def detect_intent(msg):
     if any(k in msg for k in ["pain", "fever", "weak", "hemoglobin", "report", "doctor"]):
         return "medical"
 
-    return "chat"
+    
 
+    if any(k in msg for k in ["delete all", "clear chat", "clear conversation", "reset chat"]):
+        return "clear_chat"
+
+    if "cancel" in msg:
+        return "cancel"
+    
+
+    return "chat"
 
 # =========================================================
 # 🧠 DEFICIENCY SUMMARY (NEW FEATURE)
@@ -207,8 +235,14 @@ def handle(message):
         score, triage = calculate_risk_score(st.session_state.analysis)
         return f"{triage}\nRisk Score: {score}/100"
 
-    # =====================================================
-    # 🧠 MEDICAL AI (LLM)
+
+    if intent == "clear_chat":
+        if not st.session_state.chat:
+            return "chat empty"
+
+        st.session_state.chat.clear()
+        return "🗑️ Conversation cleared."
+
     # =====================================================
     if intent == "medical":
 
@@ -243,6 +277,7 @@ def handle(message):
             "hospitals": get_hospital_context(),
             "history": get_chat_context()
         }).content
+        return clean_response(reply)
     except:
         return "👋 I can help with reports, doctors, or appointments."
 
@@ -255,10 +290,19 @@ st.title("🩺 AI Health Assistant (Final Agent System)")
 file = st.file_uploader("Upload Medical Report")
 
 if file:
-    text = load_pdf(file)
-    parsed = extract_lab_values(text)
-    st.session_state.analysis = analyze_values(parsed)
+    file_bytes = file.getvalue()
+    file_hash = hashlib.md5(file_bytes).hexdigest()
 
+    if st.session_state.analysis is None or st.session_state.get("last_file") != file.name:
+    
+        extractor = LabValueExtractor()
+        text = extractor.load_pdf(file)
+        parsed = extractor.extract(text)
+        st.session_state.analysis = analyze_values(parsed)
+        st.session_state.last_file_hash = file_hash
+if st.session_state.analysis:
+        
+        
     score, triage = calculate_risk_score(st.session_state.analysis)
 
     st.success(f"{triage} | Risk Score: {score}/100")
