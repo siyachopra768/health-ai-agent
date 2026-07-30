@@ -4,6 +4,7 @@ import re
 import json
 import os
 from groq import Groq
+from verifier import parse_reference_range,verify_value_against_source
 
 
 class LabValueExtractor:
@@ -22,33 +23,33 @@ class LabValueExtractor:
                 text += extracted + "\n"
         return text
     
-    def _normalize(self,value) -> str:
-        """strip formattiong differences before comparing against source text."""
-        return str(value).replace(".0","").strip()
+    # def _normalize(self,value) -> str:
+    #     """strip formattiong differences before comparing against source text."""
+    #     return str(value).replace(".0","").strip()
     
-    def _verify_against_source(self,extracted: dict,raw_text: str)-> dict:
-        verified ={}
-        for test_name,data in extracted.items():
-            if data is None or "value" not in data:
-                verified[test_name] = data
-                continue
-            numeric_value = data["value"]
-            normalized = self._normalize(numeric_value)
+    # def _verify_against_source(self,extracted: dict,raw_text: str)-> dict:
+    #     verified ={}
+    #     for test_name,data in extracted.items():
+    #         if data is None or "value" not in data:
+    #             verified[test_name] = data
+    #             continue
+    #         numeric_value = data["value"]
+    #         normalized = self._normalize(numeric_value)
 
-            if numeric_value == 0.0 or len(normalized) < 2:
-                print(f"[Hallucination Check] '{test_name}': suspicious/degenerate value{numeric_value} - discarded")
-                verified[test_name] = None
-                continue
+    #         if numeric_value == 0.0 or len(normalized) < 2:
+    #             print(f"[Hallucination Check] '{test_name}': suspicious/degenerate value{numeric_value} - discarded")
+    #             verified[test_name] = None
+    #             continue
 
-            if normalized in raw_text:
-                verified[test_name] = data
+        #     if normalized in raw_text:
+        #         verified[test_name] = data
 
-            else:
-                print(f"[Hallucination Check ] '{test_name}' : {numeric_value} not found in source-discarding")
-                verified[test_name] =  None
+        #     else:
+        #         print(f"[Hallucination Check ] '{test_name}' : {numeric_value} not found in source-discarding")
+        #         verified[test_name] =  None
 
 
-        return verified  
+        # return verified  
 
     def extract(self, text: str) -> dict:
         """Public entry point — same job as old extract_lab_values()."""
@@ -102,17 +103,15 @@ Return ONLY a valid JSON object in this exact format (no explanation, no markdow
   "Test Name": {
     "value": <numeric value as float>,
     "unit": "<unit string>",
-    "ref_low": <lower reference range as float>,
-    "ref_high": <upper reference range as float>
+    "reference_range": "<exact reference range text as written, e.g. '> 40' or '70-100'>"
   }
 }
 
 Rules:
-    Extract every test mentioned in the report, including Triglycerides.
-- If a value is not clearly stated, estimate a typical/reasonable value based on the reference range provided.
+- Only include tests where you can find a numeric value AND a reference range
+- Extract only values that are explicitly present in the document. Do NOT infer, estimate, or fabricate a value for any test that is missing or blank.
 - Use exact test names from the report
 - Return empty JSON {} if nothing can be extracted"""
-
         try:
             response = self.client.chat.completions.create(
                 model="llama-3.1-8b-instant",
@@ -131,20 +130,24 @@ Rules:
 
             validated = {}
             for name, vals in parsed.items():
-                if all(k in vals for k in ["value", "unit", "ref_low", "ref_high"]):
+                if all(k in vals for k in ["value", "unit", "reference_range"]):
                     try:
+                        low,high = parse_reference_range(vals["reference_range"])
                         validated[name] = {
                             "value": float(vals["value"]),
                             "unit": str(vals["unit"]),
-                            "ref_low": float(vals["ref_low"]),
-                            "ref_high": float(vals["ref_high"])
+                            "ref_low": low,
+                            "ref_high": high
                         }
                     except (ValueError, TypeError):
                         continue
-            verified = self._verify_against_source(validated,text)
-            print("DEBUG validated (before check):", validated)
-            print("DEBUG verified (after check):", verified)
-
+            verified = {}
+            for name,data in validated.items():
+                if verify_value_against_source(data["value"],text):
+                    verified[name] = data
+                else:
+                    print(f"[Hallucination Check] '{name}':{data['value']} not found in source - discarding")    
+                    verified[name] = None
             return verified
 
         except json.JSONDecodeError:
