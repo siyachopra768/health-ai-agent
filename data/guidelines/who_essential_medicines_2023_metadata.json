@@ -1,0 +1,13 @@
+{
+  "name": "WHO Model List of Essential Medicines \u2013 23rd List, 2023",
+  "description": "Core list of the most effective and safe medicines needed in a health system",
+  "author": "World Health Organization",
+  "year": 2023,
+  "topic": "essential medicines",
+  "id": "who_essential_medicines_2023",
+  "source_url": "https://www.who.int/publications/i/item/WHO-MHP-HPS-EML-2023.02",
+  "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/who_essential_medicines_2023.html",
+  "file_type": "html",
+  "file_size": 89489,
+  "sha256": "016dc42a43fda87e05591462074a271033333306fde83830b84aa275d5d4fcde"
+}

@@ -1,0 +1,53 @@
+{
+  "total_guidelines": 5,
+  "successful": 5,
+  "failed": 0,
+  "total_chunks": 791,
+  "total_characters": 608038,
+  "chunk_config": {
+    "chunk_size": 1000,
+    "chunk_overlap": 200
+  },
+  "results": [
+    {
+      "guideline_id": "cdc_opioid_2022",
+      "status": "success",
+      "source_file": "data/guidelines/cdc_opioid_2022.pdf",
+      "text_length": 571366,
+      "num_chunks": 744,
+      "output_file": "data/chunks/cdc_opioid_2022_chunks.json"
+    },
+    {
+      "guideline_id": "cdc_overdose_prevention",
+      "status": "success",
+      "source_file": "data/guidelines/cdc_overdose_prevention.html",
+      "text_length": 10678,
+      "num_chunks": 14,
+      "output_file": "data/chunks/cdc_overdose_prevention_chunks.json"
+    },
+    {
+      "guideline_id": "who_essential_medicines_2023",
+      "status": "success",
+      "source_file": "data/guidelines/who_essential_medicines_2023.html",
+      "text_length": 1432,
+      "num_chunks": 2,
+      "output_file": "data/chunks/who_essential_medicines_2023_chunks.json"
+    },
+    {
+      "guideline_id": "cdc_diabetes_2023",
+      "status": "success",
+      "source_file": "data/guidelines/cdc_diabetes_2023.html",
+      "text_length": 5164,
+      "num_chunks": 7,
+      "output_file": "data/chunks/cdc_diabetes_2023_chunks.json"
+    },
+    {
+      "guideline_id": "uspreventive_services",
+      "status": "success",
+      "source_file": "data/guidelines/uspreventive_services.html",
+      "text_length": 19398,
+      "num_chunks": 24,
+      "output_file": "data/chunks/uspreventive_services_chunks.json"
+    }
+  ]
+}

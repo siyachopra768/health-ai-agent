@@ -1,0 +1,13 @@
+{
+  "name": "CDC Diabetes Prevention and Control Resources",
+  "description": "Evidence-based guidelines and resources for diabetes prevention and management",
+  "author": "Centers for Disease Control and Prevention",
+  "year": 2023,
+  "topic": "diabetes",
+  "id": "cdc_diabetes_2023",
+  "source_url": "https://www.cdc.gov/diabetes/professional-info/index.html",
+  "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/cdc_diabetes_2023.html",
+  "file_type": "html",
+  "file_size": 65493,
+  "sha256": "e733cc11ec49931756cca6c33fedf3bc3fd6708e5ed8d58a11187f38023cde98"
+}

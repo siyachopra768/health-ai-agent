@@ -1,0 +1,71 @@
+{
+  "total_collected": 5,
+  "total_failed": 0,
+  "guidelines": [
+    {
+      "name": "CDC Clinical Practice Guideline for Prescribing Opioids for Pain \u2014 United States, 2022",
+      "description": "Evidence-based recommendations for clinicians prescribing opioids for acute, subacute, and chronic pain in outpatients aged \u226518 years.",
+      "author": "Centers for Disease Control and Prevention",
+      "year": 2022,
+      "topic": "pain management",
+      "id": "cdc_opioid_2022",
+      "source_url": "https://stacks.cdc.gov/view/cdc/122248/cdc_122248_DS1.pdf",
+      "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/cdc_opioid_2022.pdf",
+      "file_type": "pdf",
+      "file_size": 1418584,
+      "sha256": "f4e5098d13e9b3dc5cc27bb90137df57d3667350b2add885fd367f279402d18d"
+    },
+    {
+      "name": "CDC Guideline Recommendations and Guiding Principles for Overdose Prevention",
+      "description": "Clinical guidance and principles for overdose prevention",
+      "author": "Centers for Disease Control and Prevention",
+      "year": 2023,
+      "topic": "overdose prevention",
+      "id": "cdc_overdose_prevention",
+      "source_url": "https://www.cdc.gov/overdose-prevention/hcp/clinical-guidance/recommendations-and-principles.html",
+      "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/cdc_overdose_prevention.html",
+      "file_type": "html",
+      "file_size": 70624,
+      "sha256": "e41fee729701a40daf9083b475af32238922639f7e3b73441cba9f342501c01f"
+    },
+    {
+      "name": "WHO Model List of Essential Medicines \u2013 23rd List, 2023",
+      "description": "Core list of the most effective and safe medicines needed in a health system",
+      "author": "World Health Organization",
+      "year": 2023,
+      "topic": "essential medicines",
+      "id": "who_essential_medicines_2023",
+      "source_url": "https://www.who.int/publications/i/item/WHO-MHP-HPS-EML-2023.02",
+      "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/who_essential_medicines_2023.html",
+      "file_type": "html",
+      "file_size": 89489,
+      "sha256": "016dc42a43fda87e05591462074a271033333306fde83830b84aa275d5d4fcde"
+    },
+    {
+      "name": "CDC Diabetes Prevention and Control Resources",
+      "description": "Evidence-based guidelines and resources for diabetes prevention and management",
+      "author": "Centers for Disease Control and Prevention",
+      "year": 2023,
+      "topic": "diabetes",
+      "id": "cdc_diabetes_2023",
+      "source_url": "https://www.cdc.gov/diabetes/professional-info/index.html",
+      "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/cdc_diabetes_2023.html",
+      "file_type": "html",
+      "file_size": 65493,
+      "sha256": "e733cc11ec49931756cca6c33fedf3bc3fd6708e5ed8d58a11187f38023cde98"
+    },
+    {
+      "name": "U.S. Preventive Services Task Force Recommendations",
+      "description": "Evidence-based preventive service recommendations for primary care",
+      "author": "U.S. Preventive Services Task Force",
+      "year": 2024,
+      "topic": "preventive care",
+      "id": "uspreventive_services",
+      "source_url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation-topics/uspstf-a-and-b-recommendations",
+      "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/uspreventive_services.html",
+      "file_type": "html",
+      "file_size": 62945,
+      "sha256": "db638a3ccbe7041bc18a70481fb311468819261e655e32915af61c6dabab0949"
+    }
+  ]
+}

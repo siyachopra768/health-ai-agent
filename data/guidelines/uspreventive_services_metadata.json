@@ -1,0 +1,13 @@
+{
+  "name": "U.S. Preventive Services Task Force Recommendations",
+  "description": "Evidence-based preventive service recommendations for primary care",
+  "author": "U.S. Preventive Services Task Force",
+  "year": 2024,
+  "topic": "preventive care",
+  "id": "uspreventive_services",
+  "source_url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation-topics/uspstf-a-and-b-recommendations",
+  "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/uspreventive_services.html",
+  "file_type": "html",
+  "file_size": 62945,
+  "sha256": "db638a3ccbe7041bc18a70481fb311468819261e655e32915af61c6dabab0949"
+}

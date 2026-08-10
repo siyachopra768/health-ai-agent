@@ -1,0 +1,44 @@
+[
+  {
+    "chunk_id": "who_essential_medicines_2023_chunk_0000",
+    "content": "WHO Model List of Essential Medicines - 23rd list, 2023\nSkip to main content\n- Select language -\nالعربية\n中文\nfrançais\nрусский\nespañol\nportuguês\nDownload\n(904.9 kB)\nOverview\nEssential medicines are those that satisfy the priority health care needs of a population. They are selected with due regard to disease prevalence and public health relevance, evidence of efficacy and safety and comparative cost-effectiveness. They are intended to be available in functioning health systems at all times, in appropriate dosage forms, of assured quality and at prices individuals and health systems can afford.",
+    "metadata": {
+      "name": "WHO Model List of Essential Medicines – 23rd List, 2023",
+      "description": "Core list of the most effective and safe medicines needed in a health system",
+      "author": "World Health Organization",
+      "year": 2023,
+      "topic": "essential medicines",
+      "id": "who_essential_medicines_2023",
+      "source_url": "https://www.who.int/publications/i/item/WHO-MHP-HPS-EML-2023.02",
+      "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/who_essential_medicines_2023.html",
+      "file_type": "html",
+      "file_size": 89489,
+      "sha256": "016dc42a43fda87e05591462074a271033333306fde83830b84aa275d5d4fcde",
+      "chunk_index": 0,
+      "total_chunks": 2,
+      "chunk_size": 598,
+      "chunk_id": "who_essential_medicines_2023_chunk_0000"
+    }
+  },
+  {
+    "chunk_id": "who_essential_medicines_2023_chunk_0001",
+    "content": "The WHO Model List of Essential Medicines and Model List of Essential Medicines for Children are updated and published every two years, intended as a guide for countries or regional authorities to adopt or adapt in accordance with local priorities and treatment guidelines for the development and updating of national essential medicines lists. Selection of a limited number of essential medicines as essential, taking into consideration national disease burden and clinical need can lead to improved access through streamlined procurement and distribution of quality-assured medicines, support more rational or appropriate prescribing and use and lower costs for both health care systems and for patients.\nEditors\nWorld Health Organization\nNumber of pages\n67\nReference numbers\nWHO Reference Number:\nWHO/MHP/HPS/EML/2023.02\nCopyright",
+    "metadata": {
+      "name": "WHO Model List of Essential Medicines – 23rd List, 2023",
+      "description": "Core list of the most effective and safe medicines needed in a health system",
+      "author": "World Health Organization",
+      "year": 2023,
+      "topic": "essential medicines",
+      "id": "who_essential_medicines_2023",
+      "source_url": "https://www.who.int/publications/i/item/WHO-MHP-HPS-EML-2023.02",
+      "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/who_essential_medicines_2023.html",
+      "file_type": "html",
+      "file_size": 89489,
+      "sha256": "016dc42a43fda87e05591462074a271033333306fde83830b84aa275d5d4fcde",
+      "chunk_index": 1,
+      "total_chunks": 2,
+      "chunk_size": 833,
+      "chunk_id": "who_essential_medicines_2023_chunk_0001"
+    }
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "name": "CDC Guideline Recommendations and Guiding Principles for Overdose Prevention",
+  "description": "Clinical guidance and principles for overdose prevention",
+  "author": "Centers for Disease Control and Prevention",
+  "year": 2023,
+  "topic": "overdose prevention",
+  "id": "cdc_overdose_prevention",
+  "source_url": "https://www.cdc.gov/overdose-prevention/hcp/clinical-guidance/recommendations-and-principles.html",
+  "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/cdc_overdose_prevention.html",
+  "file_type": "html",
+  "file_size": 70624,
+  "sha256": "e41fee729701a40daf9083b475af32238922639f7e3b73441cba9f342501c01f"
+}

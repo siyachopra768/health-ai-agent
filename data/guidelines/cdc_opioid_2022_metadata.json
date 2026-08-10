@@ -1,0 +1,13 @@
+{
+  "name": "CDC Clinical Practice Guideline for Prescribing Opioids for Pain \u2014 United States, 2022",
+  "description": "Evidence-based recommendations for clinicians prescribing opioids for acute, subacute, and chronic pain in outpatients aged \u226518 years.",
+  "author": "Centers for Disease Control and Prevention",
+  "year": 2022,
+  "topic": "pain management",
+  "id": "cdc_opioid_2022",
+  "source_url": "https://stacks.cdc.gov/view/cdc/122248/cdc_122248_DS1.pdf",
+  "local_path": "/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/data/guidelines/cdc_opioid_2022.pdf",
+  "file_type": "pdf",
+  "file_size": 1418584,
+  "sha256": "f4e5098d13e9b3dc5cc27bb90137df57d3667350b2add885fd367f279402d18d"
+}
