@@ -133,12 +133,19 @@ class GuidelineChunker:
         if not text.strip():
              return {"guideline_id": guideline_id, "status": "error", "error": "Empty text extracted"}
 
-        chunks = self._create_chunks(text, metadata)
-        logger.info("  Created %d chunks", len(chunks))
 
-        output_path = self._save_chunks(chunks, guideline_id)
-        logger.info("  Saved to %s", output_path)
+        try:
 
+            chunks = self._create_chunks(text, metadata)
+            logger.info("  Created %d chunks", len(chunks))
+
+            output_path = self._save_chunks(chunks, guideline_id)
+            logger.info("  Saved to %s", output_path)
+
+        except Exception as e:
+            return {"guideline_id": guideline_id,"status":"error","error":f"Chunking failed: {e}"}
+
+        
         return {
             "guideline_id": guideline_id,
             "status": "success",

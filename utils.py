@@ -1,7 +1,7 @@
 from langchain_groq import ChatGroq
 import os
-
-
+from dotenv import load_dotenv
+import logging
 # -----------------------------
 # 🤖 LLM
 # -----------------------------
@@ -44,6 +44,8 @@ def analyze_values(parsed):
             status = "normal"
             severity = 0
 
+        logging.info(f"RISK_CHECK test = {test} status={status} low={low} high={high} value={value} -> severity={round(severity,3)}")
+
         results[test] = {
             "value": value,
             "status": status,
@@ -67,10 +69,12 @@ def calculate_risk_score(analysis):
         count += 1
 
     if count == 0:
+        logging.warning("RISK_SCORE count=0 — no lab values to score, returning 0")
         return 0,"⚠️ Insufficient data to assess risk"
     
     avg_severity = total_severity / count
     score = int(min(avg_severity * 100, 100))
+    logging.info(f"RISK_SCORE avg_severity={round(avg_severity,3)} count={count} -> score={score}")
 
     if score > 70:
         triage = "🚨 Emergency"

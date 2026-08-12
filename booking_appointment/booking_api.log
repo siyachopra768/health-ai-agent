@@ -1,0 +1,86 @@
+INFO:     Will watch for changes in these directories: ['/home/siyachopra02/llama_project/my_llama_app/ai_health_agent/booking_appointment']
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+INFO:     Started reloader process [9215] using WatchFiles
+INFO:     Started server process [9217]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60572 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60572 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:35748 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58938 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58952 - "GET /hospitals/search?specialty=Endocrinologist&city=Delhi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58952 - "GET /hospitals/search?city=Gurgaon HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58952 - "GET /hospitals/search?specialty=Hematologist HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58952 - "GET /hospitals/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35110 - "GET /hospitals/AIIMS%20Delhi/slots?date=2026-08-13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51230 - "GET /hospitals/Apollo%20Hospital%20Delhi/slots?date=2026-08-13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52544 - "POST /appointments/book HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34256 - "GET /hospitals/search?specialty=Hematologist&city=Gurgaon HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41554 - "GET /hospitals/Medanta%20Hospital%20Gurgaon/slots?date=2026-08-14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41212 - "GET /hospitals/search?specialty=General+Physician&city=Jaipur HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58944 - "GET /hospitals/SMS%20Medical%20College%20Jaipur/slots?date=2026-08-19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57712 - "POST /appointments/book HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45362 - "POST /appointments/book HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:42822 - "POST /appointments/book HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49864 - "GET /hospitals/search?specialty=Endocrinologist&city=Delhi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59986 - "POST /appointments/reschedule HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:47190 - "POST /appointments/reschedule HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55420 - "POST /appointments/reschedule HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:44764 - "POST /appointments/reschedule HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:48438 - "POST /appointments/cancel HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54354 - "GET /hospitals/search?specialty=your+specialty&city=your+city HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60210 - "GET /hospitals/search?specialty=cardiologist HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57828 - "GET /hospitals/None/slots?date=2026-08-13 HTTP/1.1" 404 Not Found
+WARNING:  WatchFiles detected changes in 'booking_handlers.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9217]
+INFO:     Started server process [13598]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'hybrid_router.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [13598]
+INFO:     Started server process [13685]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'hybrid_router.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [13685]
+INFO:     Started server process [14264]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'hybrid_router.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [14264]
+INFO:     Started server process [14597]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55498 - "POST /appointments/cancel HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:38650 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38650 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:37480 - "POST /appointments/cancel HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:37486 - "POST /appointments/cancel HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49236 - "GET /hospitals/search?specialty=endocrinologist&city=delhi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49238 - "GET /hospitals/hospital_name_from_search_results/slots?date=2026-08-12 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55670 - "POST /appointments/cancel HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:32860 - "GET /hospitals/search?specialty=endocrinologist&city=delhi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32860 - "GET /hospitals/AIIMS%20Delhi%20%28Delhi%29/slots?date=2026-08-12 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:32860 - "GET /hospitals/search?specialty=endocrinologist&city=delhi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53020 - "POST /appointments/cancel HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55738 - "GET /hospitals/search?specialty=endocrinologist&city=delhi HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'booking_api.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [14597]
+INFO:     Started server process [21862]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

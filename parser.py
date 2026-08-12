@@ -5,7 +5,7 @@ import json
 import os
 from groq import Groq
 from verifier import parse_reference_range,verify_value_against_source
-
+import logging
 
 class LabValueExtractor:
     """Two-stage hybrid extractor: regex first, LLM fallback."""
@@ -125,7 +125,7 @@ Rules:
 
             raw = response.choices[0].message.content.strip()
             raw = re.sub(r"```json|```", "", raw).strip()
-
+            logging.info(f"LLM_RAW_RESPONSE: {raw[:500]}") 
             parsed = json.loads(raw)
 
             validated = {}
@@ -143,11 +143,13 @@ Rules:
                         continue
             verified = {}
             for name,data in validated.items():
-                if verify_value_against_source(data["value"],text):
+                passed = verify_value_against_source(data["value"],text)
+                logging.info(f"VERIFY_CHECK test={name} value={data['value']} passed={passed}")
+                if passed:
                     verified[name] = data
+
                 else:
-                    print(f"[Hallucination Check] '{name}':{data['value']} not found in source - discarding")    
-                    verified[name] = None
+                    logging.warning(f"[Hallucination Check] '{name}':{data['value']} not found in source - discarding")    
             return verified
 
         except json.JSONDecodeError:

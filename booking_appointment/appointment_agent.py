@@ -277,6 +277,8 @@ Guidelines:
 - For rescheduling/cancellation, ask for appointment ID if not provided
 - Be concise and helpful
 - If a tool returns an error, explain it to the user and suggest next steps
+- Call ONLY ONE tool per response. Wait for the result before calling another.
+- After getting tool results, respond to the user directly without calling more tools unless the user asks for something new.
 """
 
 def create_appointment_agent(model_name: str = "llama-3.1-8b-instant", temperature: float = 0):

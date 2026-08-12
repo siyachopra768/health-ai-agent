@@ -10,8 +10,11 @@ from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
-CHUNK_DIR = Path("data/chunks")
-DB_DIR = Path("data/chroma_db")
+# Base directory for resolving paths relative to this file
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+CHUNK_DIR = BASE_DIR / "data/chunks"
+DB_DIR = BASE_DIR / "data/chroma_db"
 DB_DIR.mkdir(parents=True, exist_ok=True)
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"  # 384 dim, f
@@ -21,11 +24,11 @@ COLLECTION_NAME = "medical_guidelines"
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
-,
-    datefmt="%H:%M:%S"
+    format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
+    datefmt="%H:%M:%S",
 )
 logger = logging.getLogger(__name__)
+
 
 @dataclass
 class EmbedConfig:
@@ -70,8 +73,7 @@ class GuidelineEmbedder:
             )
         return self._collection
 
-    def _load_chunks(self, guideline_id: str) -> List[Dict[str, Any
-]]:
+    def _load_chunks(self, guideline_id: str) -> List[Dict[str, Any]]:
         path = self.config.chunk_dir / f"{guideline_id}_chunks.json"
         return json.loads(path.read_text())
 
@@ -93,24 +95,30 @@ class GuidelineEmbedder:
         total = len(chunks)
         embedded = 0
 
-        for i in range(0, total, self.config.batch_size):
-            batch = chunks[i:i + self.config.batch_size]
-            ids, docs, metas = self._prepare_batch(batch)
+        try:
+            for i in range(0, total, self.config.batch_size):
 
-            embeddings = self.model.encode(docs, show_progress_bar=
-False).tolist()
+                batch = chunks[i:i + self.config.batch_size]
+                ids, docs, metas = self._prepare_batch(batch)
 
-            self.collection.add(
-                ids=ids,
-                documents=docs,
-                metadatas=metas,
-                embeddings=embeddings,
-            )
-            embedded += len(batch)
+                embeddings = self.model.encode(docs, show_progress_bar=False).tolist()
+
+                self.collection.add(
+                    ids=ids,
+                    documents=docs,
+                    metadatas=metas,
+                    embeddings=embeddings,
+                )
+                embedded += len(batch)
+        except Exception as e:
+            return{
+                "guideline_id": guideline_id,
+                "status":"error",
+                "error": f"Embedding failed after {embedded}/{total} chunks: {e}",
+            }
 
         logger.info("  Embedded %d/%d chunks", embedded, total)
-        return {"guideline_id": guideline_id, "status": "success",
-"chunks_embedded": embedded}
+        return {"guideline_id": guideline_id, "status": "success","chunks_embedded": embedded}
 
     def embed_all(self) -> Dict[str, Any]:
         """Embed all guidelines from chunk directory."""
