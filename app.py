@@ -363,7 +363,15 @@ if st.sidebar.button("Clear Chat"):
     st.rerun()
 
 # Debug controls (development only)
-if hasattr(st, "secrets") and "debug" in st.secrets:
+debug_mode = False
+if hasattr(st, "secrets"):
+    try:
+        debug_mode = "debug" in st.secrets
+    except Exception:
+        # No secrets file found or other error accessing secrets
+        debug_mode = False
+
+if debug_mode:
     st.sidebar.markdown("---")
     st.sidebar.write("**Debug Info**")
     st.sidebar.write(f"Chat messages: {len(st.session_state.chat)}")
