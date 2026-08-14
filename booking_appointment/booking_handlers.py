@@ -108,6 +108,9 @@ class BookingHandler:
         """
         missing = intent.missing_required
         if missing:
+            # Persist the partial intent so the router can resume the booking
+            # across turns even if the user's follow-up isn't keyword-rich.
+            _snapshot_intent(intent, context)
             return HandlerResult(
                 success=False,
                 message=f"To book, I need: {', '.join(missing)}.",

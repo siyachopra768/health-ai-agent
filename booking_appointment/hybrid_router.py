@@ -42,6 +42,26 @@ BOOKING_KEYWORDS = (
 CHOICE_NUMBER_RE = re.compile(r"\b(\d+)\b")
 
 
+MEDICAL_KEYWORDS = (
+    "what", "how", "why", "symptom", "treatment", "medicine", "medication",
+    "side effect", "effect", "risk", "cholesterol", "diabetes", "bp",
+    "blood pressure", "test", "report", "level", "normal", "abnormal",
+    "vitamin", "deficiency", "diagnos", "condition", "disease",
+)
+
+BOOKING_KEYWORDS = (
+    "book", "appointment", "schedule", "cancel", "reschedule",
+    "hospital", "doctor", "slot", "specialist", "clinic",
+)
+
+CHOICE_NUMBER_RE = re.compile(r"\b(\d+)\b")
+
+
+def _looks_like_medical(text: str) -> bool:
+    t = text.lower()
+    return any(k in t for k in MEDICAL_KEYWORDS)
+
+
 def _looks_like_booking(text: str) -> bool:
     t = text.lower()
     return any(k in t for k in BOOKING_KEYWORDS)
@@ -197,6 +217,52 @@ class HybridRouter:
         if context.get("awaiting_patient_info"):
             return await self._resolve_patient_info(message, context)
 
+        # NEW: Restore any partially-built booking intent (e.g., user typed "book endocrinologist in Delhi"
+        #      then responded with "tomorrow at 10am" – the handler saved pending_intent in session state)
+        pending_intent = context.get("pending_intent")
+        if pending_intent:
+            logger.info("Restoring pending booking intent")
+            intent = Intent(
+                action=pending_intent["action"],
+                specialty=pending_intent["specialty"],
+                city=pending_intent["city"],
+                date=pending_intent["date"],
+                time=pending_intent["time"],
+                appointment_id=pending_intent["appointment_id"],
+                patient_email=pending_intent["patient_email"],
+                confidence=0.5,  # Partially‑filled intent is less confident
+                missing_required=[],
+            )
+            # Clear the snapshot – it’s being used now
+            context.pop("pending_intent", None)
+            # Continue with this intent; the handler will re‑evaluate missing fields and prompt if needed
+            if not intent.is_actionable():
+                logger.info("Restored intent still needs clarification: %s", intent.missing_required)
+                result = HandlerResult(
+                    success=False,
+                    message=f"To book, I need: {', '.join(intent.missing_required)}.",
+                    requires_clarification=True,
+                    clarification_prompt=f"Please provide: {', '.join(intent.missing_required)}",
+                )
+                # Store the restored intent back for the next turn
+                _snapshot_intent(intent, context)
+                return result.message if not result.requires_clarification else result.clarification_prompt or result.message
+            # Pass the restored intent to the handler (it may still require additional clarification)
+            try:
+                result = await self.handler.handle(intent, context)
+                if result.success:
+                    logger.info("Restored intent booking succeeded")
+                    return result.message
+                elif result.requires_clarification:
+                    logger.info("Restored intent booking needs clarification")
+                    return result.clarification_prompt or result.message
+                else:
+                    logger.warning("Restored intent booking failed: %s", result.message)
+                    # Continue to fallback logic below
+            except Exception:
+                logger.exception("Restored intent booking error")
+                # Continue to fallback logic below
+
         # Step 1: classify intent (deterministic, zero LLM)
         intent = classify_intent(message)
         logger.info("Classifier result: %s", intent)
@@ -221,19 +287,34 @@ class HybridRouter:
                 logger.exception("Deterministic handler error")
                 # Fall through to LLM
 
-        # Step 3: for non-booking-looking messages, try RAG before handing
-        # the question to the booking-only LLM agent (which has no medical
-        # knowledge -- only hospital/slot/booking tools).
-        if not _looks_like_booking(message):
+        # Step 3: for medical questions → try RAG first
+        if _looks_like_medical(message):
             try:
                 rag_answer = await self._answer_from_guidelines(message)
                 if rag_answer:
                     logger.info("Answered from guideline RAG")
                     return rag_answer
             except Exception:
-                logger.exception("RAG retrieval failed, falling back to LLM agent")
+                logger.exception("RAG retrieval failed")
 
-        # Step 4: fall back to the booking LLM agent
+        # Step 4: for booking-related messages → try deterministic handler with clarification support
+        if _looks_like_booking(message):
+            logger.info("Processing booking request (flexible handler)")
+            # Try the handler even if not fully actionable - it may provide clarification
+            try:
+                result = await self.handler.handle(intent, context)
+                if result.success:
+                    logger.info("Flexible booking handler succeeded")
+                    return result.message
+                elif result.requires_clarification:
+                    logger.info("Flexible booking handler needs clarification")
+                    return result.clarification_prompt or result.message
+                # If still not successful, fall through to LLM
+            except Exception:
+                logger.exception("Flexible booking handler error")
+                # Continue to fallback logic below
+
+        # Step 5: fall back to the booking LLM agent
         logger.info("Falling back to LangGraph agent")
         try:
             result = await asyncio.wait_for(
