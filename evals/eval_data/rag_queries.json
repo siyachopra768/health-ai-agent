@@ -1,0 +1,91 @@
+{
+  "description": "RAG retrieval test cases with hand-labeled relevant chunk IDs",
+  "version": "1.0",
+  "query_source": "data/chunks/*_chunks.json",
+  "cases": [
+    {
+      "id": "rag_01_diabetes_prevention",
+      "query": "What advice does the CDC give for preventing type 2 diabetes?",
+      "relevant_chunks": ["cdc_diabetes_2023_chunk_0001"],
+      "relevant_guideline": "cdc_diabetes_2023",
+      "description": "Query about diabetes prevention should retrieve the diabetes prevention chunk"
+    },
+    {
+      "id": "rag_02_diabetes_complications",
+      "query": "What complications can diabetes cause for eyes, feet, and medications?",
+      "relevant_chunks": ["cdc_diabetes_2023_chunk_0003"],
+      "relevant_guideline": "cdc_diabetes_2023",
+      "description": "Query about diabetes complications should retrieve foot/eye/medication chunk"
+    },
+    {
+      "id": "rag_03_opioid_prescribing_rationale",
+      "query": "Why did the CDC update the opioid prescribing guideline in 2022?",
+      "relevant_chunks": ["cdc_opioid_2022_chunk_0009", "cdc_opioid_2022_chunk_0030"],
+      "relevant_guideline": "cdc_opioid_2022",
+      "description": "Query about rationale for opioid guideline update"
+    },
+    {
+      "id": "rag_04_opioid_duration",
+      "query": "How many days of opioids should be prescribed for acute pain?",
+      "relevant_chunks": ["cdc_opioid_2022_chunk_0297"],
+      "relevant_guideline": "cdc_opioid_2022",
+      "description": "Query about opioid prescription duration for acute pain"
+    },
+    {
+      "id": "rag_05_opioid_risk_factors",
+      "query": "What are the risk factors for opioid misuse and overdose?",
+      "relevant_chunks": ["cdc_opioid_2022_chunk_0015", "cdc_overdose_prevention_chunk_0007"],
+      "relevant_guideline": "cdc_opioid_2022",
+      "description": "Query about opioid risk factors"
+    },
+    {
+      "id": "rag_06_overdose_recommendation_5",
+      "query": "What does CDC recommend for patients already on opioid therapy?",
+      "relevant_chunks": ["cdc_overdose_prevention_chunk_0007"],
+      "relevant_guideline": "cdc_overdose_prevention",
+      "description": "Query about ongoing opioid therapy management"
+    },
+    {
+      "id": "rag_07_overdose_guiding_principles",
+      "query": "What guiding principles should clinicians follow for overdose prevention?",
+      "relevant_chunks": ["cdc_overdose_prevention_chunk_0001", "cdc_overdose_prevention_chunk_0003"],
+      "relevant_guideline": "cdc_overdose_prevention",
+      "description": "Query about overdose prevention guiding principles"
+    },
+    {
+      "id": "rag_08_uspsft_aaa_screening",
+      "query": "What is the USPSTF recommendation for abdominal aortic aneurysm screening?",
+      "relevant_chunks": ["uspreventive_services_chunk_0001"],
+      "relevant_guideline": "uspreventive_services",
+      "description": "Query about AAA screening recommendation"
+    },
+    {
+      "id": "rag_09_uspsft_gonorrhea",
+      "query": "What does USPSTF recommend for gonorrhea screening?",
+      "relevant_chunks": ["uspreventive_services_chunk_0005"],
+      "relevant_guideline": "uspreventive_services",
+      "description": "Query about gonorrhea screening"
+    },
+    {
+      "id": "rag_10_uspsft_hiv",
+      "query": "When should clinicians screen for HIV infection?",
+      "relevant_chunks": ["uspreventive_services_chunk_0010"],
+      "relevant_guideline": "uspreventive_services",
+      "description": "Query about HIV screening recommendation"
+    },
+    {
+      "id": "rag_11_who_medicines",
+      "query": "What is the WHO Model List of Essential Medicines?",
+      "relevant_chunks": ["who_essential_medicines_2023_chunk_0000", "who_essential_medicines_2023_chunk_0001"],
+      "relevant_guideline": "who_essential_medicines_2023",
+      "description": "Query about WHO essential medicines list"
+    },
+    {
+      "id": "rag_12_diabetes_dpp_program",
+      "query": "How can the CDC lifestyle change program help with prediabetes?",
+      "relevant_chunks": ["cdc_diabetes_2023_chunk_0002"],
+      "relevant_guideline": "cdc_diabetes_2023",
+      "description": "Query about diabetes prevention program"
+    }
+  ]
+}

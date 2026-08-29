@@ -65,7 +65,7 @@ def validate_pdf_file(file) -> tuple[bool, str]:
         if file_size > MAX_PDF_SIZE_BYTES:
             return False, f"File too large: {file_size // 1024}KB. Maximum size is 10MB."
         # Check that file has meaningful content (look for PDF header)
-        if len(file_bytes) < 10 or not file_bytes.startswith(b"%PDF"):
+        if not   file_bytes.startswith(b"%PDF"):
             return False, "File does not appear to be a valid PDF format"
     except Exception as e:
         logger.error(f"File validation error: {e}")

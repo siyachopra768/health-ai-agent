@@ -16,8 +16,8 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent))
 
 from fastapi.testclient import TestClient
-from booking_api import app, appointments_store, HOSPITAL_NAMES, HOSPITAL_BY_NAME
-from appointment_agent import (
+from booking_appointment.booking_api import app, appointments_store, HOSPITAL_NAMES, HOSPITAL_BY_NAME
+from booking_appointment.appointment_agent import (
     search_hospitals,
     get_available_slots,
     book_appointment,

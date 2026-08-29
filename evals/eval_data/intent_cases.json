@@ -1,0 +1,390 @@
+{
+  "description": "Test cases for deterministic intent classification and entity extraction",
+  "version": "1.0",
+  "cases": [
+    {
+      "id": "intent_01_book_full",
+      "user_input": "Book an endocrinologist at AIIMS Delhi for 2026-08-29 at 10:00. Patient: John Doe, john@example.com",
+      "expected_action": "book",
+      "expected_entities": {
+        "specialty": "Endocrinologist",
+        "city": "Delhi",
+        "date": "2026-08-29",
+        "time": "10:00",
+        "patient_email": "john@example.com",
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "book"
+    },
+    {
+      "id": "intent_02_book_tomorrow",
+      "user_input": "I want to book a hematologist at Medanta Hospital Gurgaon for tomorrow at 14:30. Name: Jane Smith, email: jane@test.com",
+      "expected_action": "book",
+      "expected_entities": {
+        "specialty": "Hematologist",
+        "city": "Gurgaon",
+        "date": null,
+        "time": "14:30",
+        "patient_email": "jane@test.com",
+        "appointment_id": null
+      },
+      "expected_missing": ["date"],
+      "expected_actionable": true,
+      "category": "book"
+    },
+    {
+      "id": "intent_03_book_vague",
+      "user_input": "Book an appointment",
+      "expected_action": "book",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": ["specialty", "date", "time"],
+      "expected_actionable": true,
+      "category": "book"
+    },
+    {
+      "id": "intent_04_search_specialty",
+      "user_input": "Find endocrinologists in Delhi",
+      "expected_action": "search",
+      "expected_entities": {
+        "specialty": "Endocrinologist",
+        "city": "Delhi",
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "search"
+    },
+    {
+      "id": "intent_05_search_specialty_only",
+      "user_input": "Which hospitals have hematologists?",
+      "expected_action": "search",
+      "expected_entities": {
+        "specialty": "Hematologist",
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "search"
+    },
+    {
+      "id": "intent_06_search_city_only",
+      "user_input": "Show me hospitals in Gurgaon",
+      "expected_action": "search",
+      "expected_entities": {
+        "specialty": null,
+        "city": "Gurgaon",
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "search"
+    },
+    {
+      "id": "intent_07_search_no_filters",
+      "user_input": "List all hospitals",
+      "expected_action": "search",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "search"
+    },
+    {
+      "id": "intent_08_slots_inquiry",
+      "user_input": "Available times at Apollo Hospital Delhi tomorrow",
+      "expected_action": "search",
+      "expected_entities": {
+        "specialty": null,
+        "city": "Delhi",
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "search"
+    },
+    {
+      "id": "intent_09_cancel_with_id",
+      "user_input": "Cancel appointment abc12345",
+      "expected_action": "cancel",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": "abc12345"
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "cancel"
+    },
+    {
+      "id": "intent_10_cancel_no_id",
+      "user_input": "Cancel my Apollo appointment",
+      "expected_action": "cancel",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": ["appointment_id"],
+      "expected_actionable": true,
+      "category": "cancel"
+    },
+    {
+      "id": "intent_11_reschedule_date_time",
+      "user_input": "Reschedule appointment abc12345 to tomorrow at 11:00",
+      "expected_action": "reschedule",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": "11:00",
+        "patient_email": null,
+        "appointment_id": "abc12345"
+      },
+      "expected_missing": ["new_date"],
+      "expected_actionable": true,
+      "category": "reschedule"
+    },
+    {
+      "id": "intent_12_reschedule_time_only",
+      "user_input": "Move my appointment xyz789 to 15:30",
+      "expected_action": "reschedule",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": "15:30",
+        "patient_email": null,
+        "appointment_id": "xyz789"
+      },
+      "expected_missing": ["new_date_or_time"],
+      "expected_actionable": true,
+      "category": "reschedule"
+    },
+    {
+      "id": "intent_13_reschedule_no_id",
+      "user_input": "Reschedule my appointment",
+      "expected_action": "reschedule",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": ["appointment_id", "new_date_or_time"],
+      "expected_actionable": true,
+      "category": "reschedule"
+    },
+    {
+      "id": "intent_14_reschedule_next_week",
+      "user_input": "Change appointment abc12345 to next week",
+      "expected_action": "reschedule",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": "abc12345"
+      },
+      "expected_missing": ["new_date_or_time"],
+      "expected_actionable": true,
+      "category": "reschedule"
+    },
+    {
+      "id": "intent_15_list_all",
+      "user_input": "Show my upcoming appointments",
+      "expected_action": "list",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "list"
+    },
+    {
+      "id": "intent_16_list_by_email",
+      "user_input": "What appointments do I have for john@example.com?",
+      "expected_action": "list",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": "john@example.com",
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "list"
+    },
+    {
+      "id": "intent_17_list_days_ahead",
+      "user_input": "List appointments for next 7 days",
+      "expected_action": "list",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "list"
+    },
+    {
+      "id": "intent_18_book_12h_time",
+      "user_input": "I need to meet a cardiologist tomorrow at 10am",
+      "expected_action": "book",
+      "expected_entities": {
+        "specialty": "Cardiologist",
+        "city": null,
+        "date": null,
+        "time": "10:00",
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": ["date"],
+      "expected_actionable": true,
+      "category": "book"
+    },
+    {
+      "id": "intent_19_book_doctor_phrase",
+      "user_input": "Schedule a consultation with a general physician in Jaipur",
+      "expected_action": "book",
+      "expected_entities": {
+        "specialty": "General Physician",
+        "city": "Jaipur",
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": ["date", "time"],
+      "expected_actionable": true,
+      "category": "book"
+    },
+    {
+      "id": "intent_20_unknown_gibberish",
+      "user_input": "dsjhdsykwsyrjrgtjnh",
+      "expected_action": "unknown",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": false,
+      "category": "unknown"
+    },
+    {
+      "id": "intent_21_empty_message",
+      "user_input": "",
+      "expected_action": "unknown",
+      "expected_entities": {
+        "specialty": null,
+        "city": null,
+        "date": null,
+        "time": null,
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": false,
+      "category": "unknown"
+    },
+    {
+      "id": "intent_22_book_diabetes_specialist",
+      "user_input": "I need a diabetes specialist next week at 2pm",
+      "expected_action": "book",
+      "expected_entities": {
+        "specialty": "Endocrinologist",
+        "city": null,
+        "date": null,
+        "time": "14:00",
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": ["date"],
+      "expected_actionable": true,
+      "category": "book"
+    },
+    {
+      "id": "intent_23_book_12h_pm",
+      "user_input": "Book endocrinologist at AIIMS Delhi on 2026-09-15 at 2pm",
+      "expected_action": "book",
+      "expected_entities": {
+        "specialty": "Endocrinologist",
+        "city": "Delhi",
+        "date": "2026-09-15",
+        "time": "14:00",
+        "patient_email": null,
+        "appointment_id": null
+      },
+      "expected_missing": [],
+      "expected_actionable": true,
+      "category": "book"
+    },
+    {
+      "id": "intent_24_book_with_email",
+      "user_input": "Book a cardiologist in Delhi for tomorrow at 11am, patient@email.com",
+      "expected_action": "book",
+      "expected_entities": {
+        "specialty": "Cardiologist",
+        "city": "Delhi",
+        "date": null,
+        "time": "11:00",
+        "patient_email": "patient@email.com",
+        "appointment_id": null
+      },
+      "expected_missing": ["date"],
+      "expected_actionable": true,
+      "category": "book"
+    }
+  ]
+}

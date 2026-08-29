@@ -1,0 +1,2183 @@
+{
+  "timestamp": "2026-08-29T05:49:49.621028",
+  "version": "1.0",
+  "lab_parser": {
+    "total_cases": 11,
+    "regex_cases": 5,
+    "llm_cases": 6,
+    "overall": {
+      "true_positives": 41,
+      "false_positives": 2,
+      "false_negatives": 1,
+      "precision": 0.9535,
+      "recall": 0.9762,
+      "f1_score": 0.9647,
+      "hallucination_rate": 0.0465,
+      "verifier_filter_rate": 0.8889,
+      "regex_coverage": 0.8,
+      "avg_latency_ms": 41.21
+    },
+    "by_stage": {
+      "regex": {
+        "cases": 5,
+        "passed": 4,
+        "coverage": 0.8
+      },
+      "llm_fallback": {
+        "cases": 6,
+        "hallucinated_values_produced": 9,
+        "hallucinated_filtered_by_verifier": 8,
+        "hallucinated_slipped_through": 1,
+        "precision": 0.9615,
+        "hallucination_rate": 0.0385,
+        "verifier_filter_rate": 0.8889
+      }
+    },
+    "per_case": [
+      {
+        "case_id": "regex_01_basic_panel",
+        "case_type": "regex",
+        "description": "Standard lipid panel + kidney function, regex-parseable format",
+        "tp": 6,
+        "fp": 0,
+        "fn": 0,
+        "hallucinated_in_mock": 0,
+        "filtered_by_verifier": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hallucination_rate": 0.0,
+        "verifier_filter_rate": 1.0,
+        "latency_ms": 162.58617600033176,
+        "expected_keys": [
+          "Total Cholesterol",
+          "HDL Cholesterol",
+          "LDL Cholesterol",
+          "Creatinine",
+          "Urea",
+          "Triglycerides"
+        ],
+        "extracted_keys": [
+          "Total Cholesterol",
+          "HDL Cholesterol",
+          "LDL Cholesterol",
+          "Creatinine",
+          "Urea",
+          "Triglycerides"
+        ],
+        "hallucinated_keys_in_mock": [],
+        "hallucinated_that_slipped_through": [],
+        "expected_not_extracted": [],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "regex_02_high_values",
+        "case_type": "regex",
+        "description": "Diabetes panel with multiple high values",
+        "tp": 4,
+        "fp": 1,
+        "fn": 1,
+        "hallucinated_in_mock": 0,
+        "filtered_by_verifier": 0,
+        "precision": 0.8,
+        "recall": 0.8,
+        "f1": 0.8000000000000002,
+        "hallucination_rate": 0.2,
+        "verifier_filter_rate": 1.0,
+        "latency_ms": 11.021641999832354,
+        "expected_keys": [
+          "Glucose",
+          "HbA1c",
+          "Total Cholesterol",
+          "HDL Cholesterol",
+          "LDL Cholesterol"
+        ],
+        "extracted_keys": [
+          "Glucose",
+          "c",
+          "Total Cholesterol",
+          "HDL Cholesterol",
+          "LDL Cholesterol"
+        ],
+        "hallucinated_keys_in_mock": [],
+        "hallucinated_that_slipped_through": [],
+        "expected_not_extracted": [
+          "HbA1c"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "regex_03_one_sided_ranges",
+        "case_type": "regex",
+        "description": "Tests with one-sided reference ranges (not regex-parseable by current parser)",
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "hallucinated_in_mock": 0,
+        "filtered_by_verifier": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hallucination_rate": 0.0,
+        "verifier_filter_rate": 1.0,
+        "latency_ms": 11.68151499950909,
+        "expected_keys": [
+          "WBC",
+          "Platelets"
+        ],
+        "extracted_keys": [
+          "WBC",
+          "Platelets"
+        ],
+        "hallucinated_keys_in_mock": [],
+        "hallucinated_that_slipped_through": [],
+        "expected_not_extracted": [],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "regex_04_low_values",
+        "case_type": "regex",
+        "description": "Deficiency markers with low values",
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "hallucinated_in_mock": 0,
+        "filtered_by_verifier": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hallucination_rate": 0.0,
+        "verifier_filter_rate": 1.0,
+        "latency_ms": 13.604681998913293,
+        "expected_keys": [
+          "Vitamin D",
+          "Iron",
+          "Ferritin",
+          "TSH"
+        ],
+        "extracted_keys": [
+          "Vitamin D",
+          "Iron",
+          "Ferritin",
+          "TSH"
+        ],
+        "hallucinated_keys_in_mock": [],
+        "hallucinated_that_slipped_through": [],
+        "expected_not_extracted": [],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "regex_05_empty_result",
+        "case_type": "regex",
+        "description": "Report with no lab values \u2014 regex should return empty",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "hallucinated_in_mock": 0,
+        "filtered_by_verifier": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hallucination_rate": 0.0,
+        "verifier_filter_rate": 1.0,
+        "latency_ms": 11.790403001214145,
+        "expected_keys": [],
+        "extracted_keys": [],
+        "hallucinated_keys_in_mock": [],
+        "hallucinated_that_slipped_through": [],
+        "expected_not_extracted": [],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "llm_01_structured_that_regex_catches",
+        "case_type": "llm_fallback_mocked",
+        "description": "Basic metabolic panel \u2014 LLM returns exactly what's in the text (no hallucinations)",
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "hallucinated_in_mock": 0,
+        "filtered_by_verifier": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hallucination_rate": 0.0,
+        "verifier_filter_rate": 1.0,
+        "latency_ms": 141.49742700101342,
+        "expected_keys": [
+          "Sodium",
+          "Potassium",
+          "Chloride",
+          "CO2",
+          "Glucose"
+        ],
+        "extracted_keys": [
+          "Sodium",
+          "Potassium",
+          "Chloride",
+          "CO2",
+          "Glucose"
+        ],
+        "hallucinated_keys_in_mock": [],
+        "hallucinated_that_slipped_through": [],
+        "expected_not_extracted": [],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "llm_02_with_hallucinations",
+        "case_type": "llm_fallback_mocked",
+        "description": "LLM hallucinates 3 extra values not in source text \u2014 verifier should filter them out",
+        "tp": 4,
+        "fp": 1,
+        "fn": 0,
+        "hallucinated_in_mock": 3,
+        "filtered_by_verifier": 2,
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hallucination_rate": 0.2,
+        "verifier_filter_rate": 0.6666666666666666,
+        "latency_ms": 20.07235299970489,
+        "expected_keys": [
+          "Sodium",
+          "BUN",
+          "Creatinine",
+          "Glucose"
+        ],
+        "extracted_keys": [
+          "Sodium",
+          "BUN",
+          "Creatinine",
+          "Glucose",
+          "Hematocrit"
+        ],
+        "hallucinated_keys_in_mock": [
+          "Hematocrit",
+          "MCV",
+          "Platelet Count"
+        ],
+        "hallucinated_that_slipped_through": [
+          "Hematocrit"
+        ],
+        "expected_not_extracted": [],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "llm_03_with_degenerate_values",
+        "case_type": "llm_fallback_mocked",
+        "description": "LLM hallucinates values including 0.0 (degenerate) and 5.0 (not in source) \u2014 verifier should catch both",
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "hallucinated_in_mock": 2,
+        "filtered_by_verifier": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hallucination_rate": 0.0,
+        "verifier_filter_rate": 1.0,
+        "latency_ms": 21.862468000108493,
+        "expected_keys": [
+          "ALT",
+          "AST",
+          "ALP",
+          "Bilirubin"
+        ],
+        "extracted_keys": [
+          "ALT",
+          "AST",
+          "ALP",
+          "Bilirubin"
+        ],
+        "hallucinated_keys_in_mock": [
+          "Triglycerides",
+          "Protein"
+        ],
+        "hallucinated_that_slipped_through": [],
+        "expected_not_extracted": [],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "llm_04_partial_regex_failure",
+        "case_type": "llm_fallback_mocked",
+        "description": "Scanned report format (regex won't match due to colons) \u2014 LLM extracts correctly + 1 hallucination",
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "hallucinated_in_mock": 1,
+        "filtered_by_verifier": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hallucination_rate": 0.0,
+        "verifier_filter_rate": 1.0,
+        "latency_ms": 16.038742000091588,
+        "expected_keys": [
+          "Sodium",
+          "Potassium",
+          "Chloride",
+          "BUN",
+          "Creatinine",
+          "Glucose",
+          "Dopamine"
+        ],
+        "extracted_keys": [
+          "Sodium",
+          "Potassium",
+          "Chloride",
+          "BUN",
+          "Creatinine",
+          "Glucose",
+          "Dopamine"
+        ],
+        "hallucinated_keys_in_mock": [
+          "Adrenaline"
+        ],
+        "hallucinated_that_slipped_through": [],
+        "expected_not_extracted": [],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "llm_05_value_present_but_format_different",
+        "case_type": "llm_fallback_mocked",
+        "description": "All values present in source \u2014 verifier should pass all through. Tests value normalization (13.5 vs 13.5)",
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "hallucinated_in_mock": 0,
+        "filtered_by_verifier": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hallucination_rate": 0.0,
+        "verifier_filter_rate": 1.0,
+        "latency_ms": 19.2479640008969,
+        "expected_keys": [
+          "Hemoglobin",
+          "Hematocrit",
+          "WBC",
+          "Platelets"
+        ],
+        "extracted_keys": [
+          "Hemoglobin",
+          "Hematocrit",
+          "WBC",
+          "Platelets"
+        ],
+        "hallucinated_keys_in_mock": [],
+        "hallucinated_that_slipped_through": [],
+        "expected_not_extracted": [],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "llm_06_all_hallucinations",
+        "case_type": "llm_fallback_mocked",
+        "description": "LLM hallucinates 3 values (100% hallucination for those) \u2014 only Glucose is real",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "hallucinated_in_mock": 3,
+        "filtered_by_verifier": 3,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hallucination_rate": 0.0,
+        "verifier_filter_rate": 1.0,
+        "latency_ms": 23.89663199937786,
+        "expected_keys": [
+          "Glucose"
+        ],
+        "extracted_keys": [
+          "Glucose"
+        ],
+        "hallucinated_keys_in_mock": [
+          "Insulin",
+          "C-Peptide",
+          "HOMA-IR"
+        ],
+        "hallucinated_that_slipped_through": [],
+        "expected_not_extracted": [],
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  "intent_router": {
+    "total_cases": 24,
+    "intent_accuracy": 87.5,
+    "avg_latency_ms": 0.2,
+    "entity_metrics": {
+      "specialty": {
+        "true_positives": 24,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 100.0,
+        "recall": 100.0,
+        "f1": 100.0
+      },
+      "city": {
+        "true_positives": 24,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 100.0,
+        "recall": 100.0,
+        "f1": 100.0
+      },
+      "date": {
+        "true_positives": 19,
+        "false_positives": 5,
+        "false_negatives": 0,
+        "precision": 79.2,
+        "recall": 100.0,
+        "f1": 88.4
+      },
+      "time": {
+        "true_positives": 24,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 100.0,
+        "recall": 100.0,
+        "f1": 100.0
+      },
+      "appointment_id": {
+        "true_positives": 4,
+        "false_positives": 20,
+        "false_negatives": 0,
+        "precision": 16.7,
+        "recall": 100.0,
+        "f1": 28.6
+      },
+      "patient_email": {
+        "true_positives": 24,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 100.0,
+        "recall": 100.0,
+        "f1": 100.0
+      }
+    },
+    "missing_detection_rate": 66.7,
+    "actionable_accuracy": 79.2,
+    "by_category": {
+      "book": {
+        "tests": 8,
+        "intent_accuracy": 100.0,
+        "avg_latency_ms": 0.24
+      },
+      "cancel": {
+        "tests": 2,
+        "intent_accuracy": 100.0,
+        "avg_latency_ms": 0.16
+      },
+      "list": {
+        "tests": 3,
+        "intent_accuracy": 66.7,
+        "avg_latency_ms": 0.19
+      },
+      "reschedule": {
+        "tests": 4,
+        "intent_accuracy": 100.0,
+        "avg_latency_ms": 0.18
+      },
+      "search": {
+        "tests": 5,
+        "intent_accuracy": 60.0,
+        "avg_latency_ms": 0.23
+      },
+      "unknown": {
+        "tests": 2,
+        "intent_accuracy": 100.0,
+        "avg_latency_ms": 0.07
+      }
+    },
+    "per_case": [
+      {
+        "case_id": "intent_01_book_full",
+        "category": "book",
+        "user_input": "Book an endocrinologist at AIIMS Delhi for 2026-08-29 at 10:00. Patient: John Doe, john@example.com",
+        "predicted_action": "book",
+        "predicted_entities": {
+          "specialty": "Endocrinologist",
+          "city": "Delhi",
+          "date": "2026-08-29",
+          "time": "10:00",
+          "appointment_id": "Patient",
+          "patient_email": "john@example.com"
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.5925810000917409
+      },
+      {
+        "case_id": "intent_02_book_tomorrow",
+        "category": "book",
+        "user_input": "I want to book a hematologist at Medanta Hospital Gurgaon for tomorrow at 14:30. Name: Jane Smith, email: jane@test.com",
+        "predicted_action": "book",
+        "predicted_entities": {
+          "specialty": "Hematologist",
+          "city": "Gurgaon",
+          "date": "2026-08-30",
+          "time": "14:30",
+          "appointment_id": "hematologist",
+          "patient_email": "jane@test.com"
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": false,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": false,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.2079109999613138
+      },
+      {
+        "case_id": "intent_03_book_vague",
+        "category": "book",
+        "user_input": "Book an appointment",
+        "predicted_action": "book",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": "appointment",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [
+          "specialty",
+          "date",
+          "time"
+        ],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.16190700080187526
+      },
+      {
+        "case_id": "intent_04_search_specialty",
+        "category": "search",
+        "user_input": "Find endocrinologists in Delhi",
+        "predicted_action": "search",
+        "predicted_entities": {
+          "specialty": "Endocrinologist",
+          "city": "Delhi",
+          "date": null,
+          "time": null,
+          "appointment_id": null,
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": true,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": true,
+        "latency_ms": 0.1714589998300653
+      },
+      {
+        "case_id": "intent_05_search_specialty_only",
+        "category": "search",
+        "user_input": "Which hospitals have hematologists?",
+        "predicted_action": "book",
+        "predicted_entities": {
+          "specialty": "Hematologist",
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": "hospitals",
+          "patient_email": null
+        },
+        "predicted_actionable": false,
+        "predicted_missing": [
+          "date",
+          "time"
+        ],
+        "intent_correct": false,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": false,
+        "actionable_correct": false,
+        "passed": false,
+        "latency_ms": 0.18614500004332513
+      },
+      {
+        "case_id": "intent_06_search_city_only",
+        "category": "search",
+        "user_input": "Show me hospitals in Gurgaon",
+        "predicted_action": "search",
+        "predicted_entities": {
+          "specialty": null,
+          "city": "Gurgaon",
+          "date": null,
+          "time": null,
+          "appointment_id": "hospitals",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.37942599919915665
+      },
+      {
+        "case_id": "intent_07_search_no_filters",
+        "category": "search",
+        "user_input": "List all hospitals",
+        "predicted_action": "cancel",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": "hospitals",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": false,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.1630930000828812
+      },
+      {
+        "case_id": "intent_08_slots_inquiry",
+        "category": "search",
+        "user_input": "Available times at Apollo Hospital Delhi tomorrow",
+        "predicted_action": "search",
+        "predicted_entities": {
+          "specialty": null,
+          "city": "Delhi",
+          "date": "2026-08-30",
+          "time": null,
+          "appointment_id": "Available",
+          "patient_email": null
+        },
+        "predicted_actionable": false,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": false,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": false,
+        "passed": false,
+        "latency_ms": 0.22988900127529632
+      },
+      {
+        "case_id": "intent_09_cancel_with_id",
+        "category": "cancel",
+        "user_input": "Cancel appointment abc12345",
+        "predicted_action": "cancel",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": "Cancel",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.16352400052710436
+      },
+      {
+        "case_id": "intent_10_cancel_no_id",
+        "category": "cancel",
+        "user_input": "Cancel my Apollo appointment",
+        "predicted_action": "cancel",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": "Cancel",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": false,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.16025500008254312
+      },
+      {
+        "case_id": "intent_11_reschedule_date_time",
+        "category": "reschedule",
+        "user_input": "Reschedule appointment abc12345 to tomorrow at 11:00",
+        "predicted_action": "reschedule",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": "2026-08-30",
+          "time": "11:00",
+          "appointment_id": "Reschedule",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": false,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": false,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.16713299919501878
+      },
+      {
+        "case_id": "intent_12_reschedule_time_only",
+        "category": "reschedule",
+        "user_input": "Move my appointment xyz789 to 15:30",
+        "predicted_action": "reschedule",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": "15:30",
+          "appointment_id": "appointment",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": false,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.2075990014418494
+      },
+      {
+        "case_id": "intent_13_reschedule_no_id",
+        "category": "reschedule",
+        "user_input": "Reschedule my appointment",
+        "predicted_action": "reschedule",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": "Reschedule",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [
+          "new_date_or_time"
+        ],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": false,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.17358100012643263
+      },
+      {
+        "case_id": "intent_14_reschedule_next_week",
+        "category": "reschedule",
+        "user_input": "Change appointment abc12345 to next week",
+        "predicted_action": "reschedule",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": "Change",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [
+          "new_date_or_time"
+        ],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.17031100105668884
+      },
+      {
+        "case_id": "intent_15_list_all",
+        "category": "list",
+        "user_input": "Show my upcoming appointments",
+        "predicted_action": "list",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": "upcoming",
+          "patient_email": null
+        },
+        "predicted_actionable": false,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": false,
+        "passed": false,
+        "latency_ms": 0.1488939997216221
+      },
+      {
+        "case_id": "intent_16_list_by_email",
+        "category": "list",
+        "user_input": "What appointments do I have for john@example.com?",
+        "predicted_action": "cancel",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": "appointments",
+          "patient_email": "john@example.com"
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": false,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.1534769999125274
+      },
+      {
+        "case_id": "intent_17_list_days_ahead",
+        "category": "list",
+        "user_input": "List appointments for next 7 days",
+        "predicted_action": "list",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": "appointments",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.25803900098253507
+      },
+      {
+        "case_id": "intent_18_book_12h_time",
+        "category": "book",
+        "user_input": "I need to meet a cardiologist tomorrow at 10am",
+        "predicted_action": "book",
+        "predicted_entities": {
+          "specialty": "Cardiologist",
+          "city": null,
+          "date": "2026-08-30",
+          "time": "10:00",
+          "appointment_id": "cardiologist",
+          "patient_email": null
+        },
+        "predicted_actionable": false,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": false,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": false,
+        "actionable_correct": false,
+        "passed": false,
+        "latency_ms": 0.2009859999816399
+      },
+      {
+        "case_id": "intent_19_book_doctor_phrase",
+        "category": "book",
+        "user_input": "Schedule a consultation with a general physician in Jaipur",
+        "predicted_action": "book",
+        "predicted_entities": {
+          "specialty": "General Physician",
+          "city": "Jaipur",
+          "date": null,
+          "time": null,
+          "appointment_id": "Schedule",
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [
+          "date",
+          "time"
+        ],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.1826269999583019
+      },
+      {
+        "case_id": "intent_20_unknown_gibberish",
+        "category": "unknown",
+        "user_input": "dsjhdsykwsyrjrgtjnh",
+        "predicted_action": "unknown",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": null,
+          "patient_email": null
+        },
+        "predicted_actionable": false,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": true,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": true,
+        "latency_ms": 0.14031499995326158
+      },
+      {
+        "case_id": "intent_21_empty_message",
+        "category": "unknown",
+        "user_input": "",
+        "predicted_action": "unknown",
+        "predicted_entities": {
+          "specialty": null,
+          "city": null,
+          "date": null,
+          "time": null,
+          "appointment_id": null,
+          "patient_email": null
+        },
+        "predicted_actionable": false,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": true,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": true,
+        "latency_ms": 0.0038479993236251175
+      },
+      {
+        "case_id": "intent_22_book_diabetes_specialist",
+        "category": "book",
+        "user_input": "I need a diabetes specialist next week at 2pm",
+        "predicted_action": "book",
+        "predicted_entities": {
+          "specialty": "Endocrinologist",
+          "city": null,
+          "date": null,
+          "time": "14:00",
+          "appointment_id": "diabetes",
+          "patient_email": null
+        },
+        "predicted_actionable": false,
+        "predicted_missing": [
+          "date"
+        ],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": false,
+        "passed": false,
+        "latency_ms": 0.17606099936529063
+      },
+      {
+        "case_id": "intent_23_book_12h_pm",
+        "category": "book",
+        "user_input": "Book endocrinologist at AIIMS Delhi on 2026-09-15 at 2pm",
+        "predicted_action": "book",
+        "predicted_entities": {
+          "specialty": "Endocrinologist",
+          "city": "Delhi",
+          "date": "2026-09-15",
+          "time": "14:00",
+          "appointment_id": null,
+          "patient_email": null
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": true,
+          "time": true,
+          "appointment_id": true,
+          "patient_email": true
+        },
+        "missing_correct": true,
+        "actionable_correct": true,
+        "passed": true,
+        "latency_ms": 0.2073420000670012
+      },
+      {
+        "case_id": "intent_24_book_with_email",
+        "category": "book",
+        "user_input": "Book a cardiologist in Delhi for tomorrow at 11am, patient@email.com",
+        "predicted_action": "book",
+        "predicted_entities": {
+          "specialty": "Cardiologist",
+          "city": "Delhi",
+          "date": "2026-08-30",
+          "time": "11:00",
+          "appointment_id": "cardiologist",
+          "patient_email": "patient@email.com"
+        },
+        "predicted_actionable": true,
+        "predicted_missing": [],
+        "intent_correct": true,
+        "entities_correct": {
+          "specialty": true,
+          "city": true,
+          "date": false,
+          "time": true,
+          "appointment_id": false,
+          "patient_email": true
+        },
+        "missing_correct": false,
+        "actionable_correct": true,
+        "passed": false,
+        "latency_ms": 0.18137799997930415
+      }
+    ]
+  },
+  "rag": {
+    "total_queries": 12,
+    "successful_queries": 12,
+    "error_queries": 0,
+    "precision_at_3": 25.0,
+    "recall_at_3": 66.7,
+    "mrr_at_3": 0.5694,
+    "coverage": 100.0,
+    "avg_latency_ms": 8883.25,
+    "stage_comparison": {
+      "dense_only_precision_at_3": 22.2,
+      "dense_only_recall_at_3": 58.3,
+      "sparse_only_bm25_precision_at_3": 27.8,
+      "sparse_only_bm25_recall_at_3": 70.8,
+      "hybrid_reranked_precision_at_3": 25.0,
+      "hybrid_reranked_recall_at_3": 66.7
+    },
+    "per_query": [
+      {
+        "case_id": "rag_01_diabetes_prevention",
+        "query": "What advice does the CDC give for preventing type 2 diabetes?",
+        "relevant_chunks": [
+          "cdc_diabetes_2023_chunk_0001"
+        ],
+        "relevant_guideline": "cdc_diabetes_2023",
+        "retrieved_chunk_ids": [
+          "cdc_diabetes_2023_chunk_0001",
+          "cdc_diabetes_2023_chunk_0000",
+          "cdc_diabetes_2023_chunk_0004"
+        ],
+        "retrieved_scores": [
+          6.6365861892700195,
+          5.281037330627441,
+          1.5757803916931152
+        ],
+        "latency_ms": 60809.69679900045,
+        "precision_at_k": {
+          "1": 1.0,
+          "3": 0.3333333333333333,
+          "5": 0.3333333333333333
+        },
+        "recall_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "mrr_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "dense_chunk_ids": [
+          "cdc_diabetes_2023_chunk_0001",
+          "cdc_diabetes_2023_chunk_0000",
+          "cdc_diabetes_2023_chunk_0002"
+        ],
+        "sparse_chunk_ids": [
+          "cdc_diabetes_2023_chunk_0000",
+          "cdc_diabetes_2023_chunk_0001",
+          "cdc_opioid_2022_chunk_0080"
+        ],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "rag_02_diabetes_complications",
+        "query": "What complications can diabetes cause for eyes, feet, and medications?",
+        "relevant_chunks": [
+          "cdc_diabetes_2023_chunk_0003"
+        ],
+        "relevant_guideline": "cdc_diabetes_2023",
+        "retrieved_chunk_ids": [
+          "cdc_diabetes_2023_chunk_0003",
+          "cdc_diabetes_2023_chunk_0002",
+          "cdc_opioid_2022_chunk_0173"
+        ],
+        "retrieved_scores": [
+          -1.0341699123382568,
+          -2.2027816772460938,
+          -7.514509201049805
+        ],
+        "latency_ms": 5400.9878020006,
+        "precision_at_k": {
+          "1": 1.0,
+          "3": 0.3333333333333333,
+          "5": 0.3333333333333333
+        },
+        "recall_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "mrr_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "dense_chunk_ids": [
+          "cdc_diabetes_2023_chunk_0002",
+          "cdc_diabetes_2023_chunk_0000",
+          "cdc_diabetes_2023_chunk_0003"
+        ],
+        "sparse_chunk_ids": [
+          "cdc_diabetes_2023_chunk_0003",
+          "cdc_diabetes_2023_chunk_0002",
+          "cdc_diabetes_2023_chunk_0004"
+        ],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "rag_03_opioid_prescribing_rationale",
+        "query": "Why did the CDC update the opioid prescribing guideline in 2022?",
+        "relevant_chunks": [
+          "cdc_opioid_2022_chunk_0009",
+          "cdc_opioid_2022_chunk_0030"
+        ],
+        "relevant_guideline": "cdc_opioid_2022",
+        "retrieved_chunk_ids": [
+          "cdc_opioid_2022_chunk_0045",
+          "cdc_opioid_2022_chunk_0504",
+          "cdc_opioid_2022_chunk_0443"
+        ],
+        "retrieved_scores": [
+          6.394503593444824,
+          6.041105270385742,
+          5.893975257873535
+        ],
+        "latency_ms": 4151.732459999039,
+        "precision_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "recall_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "mrr_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "dense_chunk_ids": [
+          "cdc_opioid_2022_chunk_0026",
+          "cdc_opioid_2022_chunk_0025",
+          "cdc_opioid_2022_chunk_0504"
+        ],
+        "sparse_chunk_ids": [
+          "cdc_opioid_2022_chunk_0444",
+          "cdc_opioid_2022_chunk_0068",
+          "cdc_opioid_2022_chunk_0024"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "rag_04_opioid_duration",
+        "query": "How many days of opioids should be prescribed for acute pain?",
+        "relevant_chunks": [
+          "cdc_opioid_2022_chunk_0297"
+        ],
+        "relevant_guideline": "cdc_opioid_2022",
+        "retrieved_chunk_ids": [
+          "cdc_opioid_2022_chunk_0295",
+          "cdc_opioid_2022_chunk_0296",
+          "cdc_opioid_2022_chunk_0297"
+        ],
+        "retrieved_scores": [
+          8.680575370788574,
+          7.916102409362793,
+          7.518979072570801
+        ],
+        "latency_ms": 3380.2182109993737,
+        "precision_at_k": {
+          "1": 0.0,
+          "3": 0.3333333333333333,
+          "5": 0.3333333333333333
+        },
+        "recall_at_k": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "mrr_at_k": {
+          "1": 0.0,
+          "3": 0.3333333333333333,
+          "5": 0.3333333333333333
+        },
+        "dense_chunk_ids": [
+          "cdc_opioid_2022_chunk_0295",
+          "cdc_opioid_2022_chunk_0296",
+          "cdc_opioid_2022_chunk_0130"
+        ],
+        "sparse_chunk_ids": [
+          "cdc_opioid_2022_chunk_0297",
+          "cdc_opioid_2022_chunk_0301",
+          "cdc_opioid_2022_chunk_0295"
+        ],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "rag_05_opioid_risk_factors",
+        "query": "What are the risk factors for opioid misuse and overdose?",
+        "relevant_chunks": [
+          "cdc_opioid_2022_chunk_0015",
+          "cdc_overdose_prevention_chunk_0007"
+        ],
+        "relevant_guideline": "cdc_opioid_2022",
+        "retrieved_chunk_ids": [
+          "cdc_opioid_2022_chunk_0021",
+          "cdc_opioid_2022_chunk_0258",
+          "cdc_opioid_2022_chunk_0236"
+        ],
+        "retrieved_scores": [
+          6.560254096984863,
+          6.300297260284424,
+          6.074471473693848
+        ],
+        "latency_ms": 3377.8367369995976,
+        "precision_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "recall_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "mrr_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "dense_chunk_ids": [
+          "cdc_opioid_2022_chunk_0358",
+          "cdc_opioid_2022_chunk_0268",
+          "cdc_opioid_2022_chunk_0237"
+        ],
+        "sparse_chunk_ids": [
+          "cdc_opioid_2022_chunk_0033",
+          "cdc_opioid_2022_chunk_0354",
+          "cdc_opioid_2022_chunk_0438"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "rag_06_overdose_recommendation_5",
+        "query": "What does CDC recommend for patients already on opioid therapy?",
+        "relevant_chunks": [
+          "cdc_overdose_prevention_chunk_0007"
+        ],
+        "relevant_guideline": "cdc_overdose_prevention",
+        "retrieved_chunk_ids": [
+          "cdc_opioid_2022_chunk_0445",
+          "cdc_opioid_2022_chunk_0049",
+          "cdc_opioid_2022_chunk_0009"
+        ],
+        "retrieved_scores": [
+          7.623687744140625,
+          6.501147747039795,
+          6.3112874031066895
+        ],
+        "latency_ms": 2989.5146309991105,
+        "precision_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "recall_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "mrr_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "dense_chunk_ids": [
+          "cdc_opioid_2022_chunk_0115",
+          "cdc_opioid_2022_chunk_0025",
+          "cdc_opioid_2022_chunk_0040"
+        ],
+        "sparse_chunk_ids": [
+          "cdc_opioid_2022_chunk_0269",
+          "cdc_opioid_2022_chunk_0199",
+          "cdc_opioid_2022_chunk_0433"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "rag_07_overdose_guiding_principles",
+        "query": "What guiding principles should clinicians follow for overdose prevention?",
+        "relevant_chunks": [
+          "cdc_overdose_prevention_chunk_0001",
+          "cdc_overdose_prevention_chunk_0003"
+        ],
+        "relevant_guideline": "cdc_overdose_prevention",
+        "retrieved_chunk_ids": [
+          "cdc_overdose_prevention_chunk_0000",
+          "cdc_opioid_2022_chunk_0104",
+          "cdc_opioid_2022_chunk_0255"
+        ],
+        "retrieved_scores": [
+          4.667718887329102,
+          3.2863337993621826,
+          3.1383509635925293
+        ],
+        "latency_ms": 2602.8243659984582,
+        "precision_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "recall_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "mrr_at_k": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0
+        },
+        "dense_chunk_ids": [
+          "cdc_overdose_prevention_chunk_0000",
+          "cdc_overdose_prevention_chunk_0012",
+          "cdc_opioid_2022_chunk_0255"
+        ],
+        "sparse_chunk_ids": [
+          "cdc_overdose_prevention_chunk_0000",
+          "cdc_overdose_prevention_chunk_0002",
+          "cdc_overdose_prevention_chunk_0001"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "rag_08_uspsft_aaa_screening",
+        "query": "What is the USPSTF recommendation for abdominal aortic aneurysm screening?",
+        "relevant_chunks": [
+          "uspreventive_services_chunk_0001"
+        ],
+        "relevant_guideline": "uspreventive_services",
+        "retrieved_chunk_ids": [
+          "uspreventive_services_chunk_0001",
+          "uspreventive_services_chunk_0000",
+          "uspreventive_services_chunk_0011"
+        ],
+        "retrieved_scores": [
+          8.133037567138672,
+          6.562238693237305,
+          -0.07443677634000778
+        ],
+        "latency_ms": 7472.558126999502,
+        "precision_at_k": {
+          "1": 1.0,
+          "3": 0.3333333333333333,
+          "5": 0.3333333333333333
+        },
+        "recall_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "mrr_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "dense_chunk_ids": [
+          "uspreventive_services_chunk_0000",
+          "uspreventive_services_chunk_0001",
+          "uspreventive_services_chunk_0011"
+        ],
+        "sparse_chunk_ids": [
+          "uspreventive_services_chunk_0000",
+          "uspreventive_services_chunk_0001",
+          "cdc_opioid_2022_chunk_0388"
+        ],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "rag_09_uspsft_gonorrhea",
+        "query": "What does USPSTF recommend for gonorrhea screening?",
+        "relevant_chunks": [
+          "uspreventive_services_chunk_0005"
+        ],
+        "relevant_guideline": "uspreventive_services",
+        "retrieved_chunk_ids": [
+          "uspreventive_services_chunk_0005",
+          "uspreventive_services_chunk_0004",
+          "uspreventive_services_chunk_0001"
+        ],
+        "retrieved_scores": [
+          8.158952713012695,
+          6.943299293518066,
+          2.791879415512085
+        ],
+        "latency_ms": 5039.5232800001395,
+        "precision_at_k": {
+          "1": 1.0,
+          "3": 0.3333333333333333,
+          "5": 0.3333333333333333
+        },
+        "recall_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "mrr_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "dense_chunk_ids": [
+          "uspreventive_services_chunk_0004",
+          "uspreventive_services_chunk_0005",
+          "uspreventive_services_chunk_0019"
+        ],
+        "sparse_chunk_ids": [
+          "uspreventive_services_chunk_0005",
+          "uspreventive_services_chunk_0004",
+          "uspreventive_services_chunk_0011"
+        ],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "rag_10_uspsft_hiv",
+        "query": "When should clinicians screen for HIV infection?",
+        "relevant_chunks": [
+          "uspreventive_services_chunk_0010"
+        ],
+        "relevant_guideline": "uspreventive_services",
+        "retrieved_chunk_ids": [
+          "uspreventive_services_chunk_0010",
+          "uspreventive_services_chunk_0009",
+          "uspreventive_services_chunk_0015"
+        ],
+        "retrieved_scores": [
+          9.640433311462402,
+          4.1503496170043945,
+          2.6445765495300293
+        ],
+        "latency_ms": 3245.2962579991436,
+        "precision_at_k": {
+          "1": 1.0,
+          "3": 0.3333333333333333,
+          "5": 0.3333333333333333
+        },
+        "recall_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "mrr_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "dense_chunk_ids": [
+          "uspreventive_services_chunk_0010",
+          "uspreventive_services_chunk_0016",
+          "uspreventive_services_chunk_0012"
+        ],
+        "sparse_chunk_ids": [
+          "uspreventive_services_chunk_0010",
+          "cdc_opioid_2022_chunk_0327",
+          "uspreventive_services_chunk_0016"
+        ],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "rag_11_who_medicines",
+        "query": "What is the WHO Model List of Essential Medicines?",
+        "relevant_chunks": [
+          "who_essential_medicines_2023_chunk_0000",
+          "who_essential_medicines_2023_chunk_0001"
+        ],
+        "relevant_guideline": "who_essential_medicines_2023",
+        "retrieved_chunk_ids": [
+          "who_essential_medicines_2023_chunk_0001",
+          "who_essential_medicines_2023_chunk_0000",
+          "cdc_opioid_2022_chunk_0020"
+        ],
+        "retrieved_scores": [
+          8.914474487304688,
+          8.564530372619629,
+          -7.885199069976807
+        ],
+        "latency_ms": 5168.743256999733,
+        "precision_at_k": {
+          "1": 1.0,
+          "3": 0.6666666666666666,
+          "5": 0.6666666666666666
+        },
+        "recall_at_k": {
+          "1": 0.5,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "mrr_at_k": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "dense_chunk_ids": [
+          "who_essential_medicines_2023_chunk_0000",
+          "who_essential_medicines_2023_chunk_0001",
+          "cdc_opioid_2022_chunk_0005"
+        ],
+        "sparse_chunk_ids": [
+          "who_essential_medicines_2023_chunk_0001",
+          "who_essential_medicines_2023_chunk_0000",
+          "cdc_opioid_2022_chunk_0518"
+        ],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "rag_12_diabetes_dpp_program",
+        "query": "How can the CDC lifestyle change program help with prediabetes?",
+        "relevant_chunks": [
+          "cdc_diabetes_2023_chunk_0002"
+        ],
+        "relevant_guideline": "cdc_diabetes_2023",
+        "retrieved_chunk_ids": [
+          "cdc_diabetes_2023_chunk_0001",
+          "cdc_diabetes_2023_chunk_0002",
+          "cdc_diabetes_2023_chunk_0000"
+        ],
+        "retrieved_scores": [
+          7.090859889984131,
+          3.907047986984253,
+          0.1395532637834549
+        ],
+        "latency_ms": 2960.0289840000187,
+        "precision_at_k": {
+          "1": 0.0,
+          "3": 0.3333333333333333,
+          "5": 0.3333333333333333
+        },
+        "recall_at_k": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0
+        },
+        "mrr_at_k": {
+          "1": 0.0,
+          "3": 0.5,
+          "5": 0.5
+        },
+        "dense_chunk_ids": [
+          "cdc_diabetes_2023_chunk_0001",
+          "cdc_diabetes_2023_chunk_0002",
+          "cdc_diabetes_2023_chunk_0000"
+        ],
+        "sparse_chunk_ids": [
+          "cdc_diabetes_2023_chunk_0001",
+          "cdc_diabetes_2023_chunk_0002",
+          "cdc_opioid_2022_chunk_0093"
+        ],
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  "hybrid_router": {
+    "total_cases": 20,
+    "route_accuracy": 80.0,
+    "outcome_accuracy": 10.0,
+    "route_accuracy_by_path": {
+      "booking_handler": {
+        "tests": 14,
+        "accuracy": 78.6
+      },
+      "rag": {
+        "tests": 5,
+        "accuracy": 100.0
+      },
+      "llm_fallback": {
+        "tests": 1,
+        "accuracy": 0.0
+      }
+    },
+    "avg_latency_ms": 20196.38,
+    "multiturn_cases": 2,
+    "multiturn_success": 0,
+    "errors": 0,
+    "per_case": [
+      {
+        "case_id": "router_01_booking_full",
+        "messages": [
+          "Book an endocrinologist at AIIMS Delhi for 2026-08-29 at 10:00. Patient: John Doe, john@example.com"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "success",
+        "description": "Full booking with all details \u2014 should go to deterministic handler",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "error",
+        "final_response": "I encountered an error processing your request: Error code: 404 - {'error': {'message': 'The model `llama-3.1-8b-instant` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+        "latency_ms": 1401.6735929999413,
+        "turn_routes": [
+          "booking_handler"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_02_search_hospitals",
+        "messages": [
+          "Find endocrinologists in Delhi"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "success",
+        "description": "Hospital search \u2014 should go to deterministic handler",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "error",
+        "final_response": "I encountered an error processing your request: Error code: 404 - {'error': {'message': 'The model `llama-3.1-8b-instant` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+        "latency_ms": 711.7922540001018,
+        "turn_routes": [
+          "booking_handler"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_03_medical_rag",
+        "messages": [
+          "What does high cholesterol mean and what are the treatment options?"
+        ],
+        "expected_route": "rag",
+        "expected_outcome": "success",
+        "description": "Medical question \u2014 should go to RAG retrieval",
+        "predicted_route": "rag",
+        "predicted_outcome": "clarification",
+        "final_response": "Here's what the guidelines say:\n\n**cdc_opioid_2022**\nreferral options that span the levels of care that patients might \nneed to enable rapid collaboration and referral, when needed, \nand work together to ensure sufficient treatment capacity at \nthe practice level.\nManagement of Opioid Misuse That Does Not \nMeet Criteria for Opioid Use Disorder\nClinicians can have challenges distinguishing between \nopioid misuse behaviors without opioid use disorder\n\n**cdc_opioid_2022**\nwith nonopioid therapies, uncertain long-term benefits, and \npotential for serious harms.\nOpioids should not be considered first-line or routine therapy \nfor subacute or chronic pain. Although evidence on long-term \nbenefits of nonopioid therapies also is limited, these therapies \nalso are associated with short-term benefits, no evidence exists \nfor attenuated benefit over time or difficulty stopp\n\n**cdc_opioid_2022**\nto appropriate, diversified, effective nonpharmacologic and \npharmacologic pain management options that are person \ncentered, affordable, accessible, and well coordinated. \nThis begins with raising awareness and acknowledging the \npresence of these inequities, strengthening patient-clinician \ncommunication, leveraging community health workers, \nimplementing multidisciplinary care teams, tracking a",
+        "latency_ms": 34191.70319600016,
+        "turn_routes": [
+          "rag"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_04_non_medical_decline",
+        "messages": [
+          "What's the weather like today?"
+        ],
+        "expected_route": "llm_fallback",
+        "expected_outcome": "clarification",
+        "description": "Non-medical, non-booking \u2014 should decline or fall back to LLM",
+        "predicted_route": "rag",
+        "predicted_outcome": "error",
+        "final_response": "Here's what the guidelines say:\n\n**cdc_opioid_2022**\nthe past 30 days (80), and in 2020, approximately 143 million \nopioid prescriptions were dispensed from pharmacies in the \nUnited States (81). Rates of opioid prescribing continue to vary \nacross states, medical specialties, patient demographics, and pain \nconditions in ways that cannot be explained by the underlying \nhealth status of the population, and often are discordant with \nthe 2016 CDC Opi\n\n**cdc_opioid_2022**\nconcomitant medications, and other factors ( 55,202,203). \nWhen opioids are prescribed for acute pain, similar associations \nhave been found, with dosages of 50 to <100 MME/day \nassociated with 4.73 times the risk for overdose and dosages of \n\u2265100 MME/day associated with 6.64 times the risk, compared \nwith dosages of 1 to <20 MME/day (55). The MME cut points \nin these studies (e.g., 20 MME, 50 MME\n\n**cdc_opioid_2022**\nInstitute on Drug Abuse (NIDA) at the National Institutes \nof Health (NIH), the Substance Abuse and Mental Health \nServices Administration (SAMHSA), FDA, and the Indian \nHealth Service (IHS). BSC/NCIPC included ex officio \nmembers from the Administration for Children and Families; \nthe Administration on Aging in the Administration for \nCommunity Living; the National Institute for Occupational \nSaf",
+        "latency_ms": 48587.84901799845,
+        "turn_routes": [
+          "rag"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_05_cancel_appointment",
+        "messages": [
+          "Cancel appointment abc12345"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "success",
+        "description": "Cancel with ID \u2014 should go to deterministic handler",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "error",
+        "final_response": "I encountered an error processing your request: Error code: 404 - {'error': {'message': 'The model `llama-3.1-8b-instant` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+        "latency_ms": 2454.1504329990858,
+        "turn_routes": [
+          "booking_handler"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_06_reschedule",
+        "messages": [
+          "Reschedule appointment abc12345 to tomorrow at 11:00"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "success",
+        "description": "Reschedule with all details \u2014 should go to deterministic handler",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "error",
+        "final_response": "I encountered an error processing your request: Error code: 404 - {'error': {'message': 'The model `llama-3.1-8b-instant` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+        "latency_ms": 533.6932950012852,
+        "turn_routes": [
+          "booking_handler"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_07_list_appointments",
+        "messages": [
+          "Show my upcoming appointments"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "success",
+        "description": "List appointments \u2014 should go to deterministic handler",
+        "predicted_route": "rag",
+        "predicted_outcome": "clarification",
+        "final_response": "Here's what the guidelines say:\n\n**cdc_opioid_2022**\nRegister notice (85 FR 44303) from July 22, 2020, through \nAugust 21, 2020, to solicit input from patients, caregivers, \nand clinicians interested in participating in individual \nconversations. After the Federal Register notice closed, CDC \nand OPM randomly selected participants within each group \n(i.e., patients, caregivers, and clinicians) from 973 respondents. \nCDC and OPM also developed a rand\n\n**cdc_opioid_2022**\nfor nominations at the December 4\u20135, 2019, public meeting \nand heard recommendations from the public during the \npublic comment opportunities, as well as from BSC/NCIPC \nmembers, regarding recommendations for nominations. \nPersons interested in being considered for the workgroup were \nencouraged to submit self-nominations from December 4, \n2019, through February 4, 2020. CDC\u2019s BSC/NCIPC received\n\n**cdc_opioid_2022**\nJewel Mullen, MD, MPH, MPA\nJeff Niederdeppe, PhD\nCeleste Philip, MD, MPH\nPatricia Quinlisk, MD, MPH \nPatrick L. Remington, MD, MPH \nCarlos Roig, MS, MA\nWilliam Schaffner, MD \nMorgan Bobb Swanson, BS\nIan Branam, MA, \nActing Lead Health Communication Specialist\nKiana Cohen, MPH, Symone Hairston, MPH, \nLeslie Hamlin, Lowery Johnson, \nHealth Communication Specialists\nWill Yang, MA,\nVisual Information",
+        "latency_ms": 35927.51680999936,
+        "turn_routes": [
+          "rag"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_08_booking_vague_needs_clarification",
+        "messages": [
+          "Book an appointment"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "clarification",
+        "description": "Vague booking \u2014 should ask for missing details via deterministic handler",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "clarification",
+        "final_response": "Please provide: specialty, date, time",
+        "latency_ms": 0.857350998558104,
+        "turn_routes": [
+          "booking_handler"
+        ],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "router_09_multiturn_booking_choose_hospital",
+        "messages": [
+          "I need an endocrinologist in Delhi",
+          "2"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "clarification",
+        "description": "Multi-turn: first asks for hospital, user picks option 2",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "error",
+        "final_response": "I encountered an error processing your request: Error code: 404 - {'error': {'message': 'The model `llama-3.1-8b-instant` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+        "latency_ms": 9207.438576999266,
+        "turn_routes": [
+          "booking_handler",
+          "booking_handler"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_10_multiturn_booking_provide_info",
+        "messages": [
+          "Book endocrinologist at AIIMS Delhi for 2026-08-29 at 10:00",
+          "John Doe john@example.com"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "success",
+        "description": "Multi-turn: booking prompt, user provides patient name and email",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "error",
+        "final_response": "I encountered an error processing your request: Error code: 404 - {'error': {'message': 'The model `llama-3.1-8b-instant` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+        "latency_ms": 6122.796962999928,
+        "turn_routes": [
+          "booking_handler",
+          "booking_handler"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_11_medical_diabetes",
+        "messages": [
+          "How can I prevent type 2 diabetes?"
+        ],
+        "expected_route": "rag",
+        "expected_outcome": "success",
+        "description": "Diabetes prevention question \u2014 should go to RAG",
+        "predicted_route": "rag",
+        "predicted_outcome": "clarification",
+        "final_response": "Here's what the guidelines say:\n\n**cdc_diabetes_2023**\nPreventing type 2 diabetes\nAbout 1 in 3 American adults has prediabetes, which increases their risk for developing type 2 diabetes. More than 8 in 10 of them don\u2019t know they have prediabetes.\nNational Diabetes Prevention Program\nAs a health care provider, you're often the first line in screening and referring patients to a type 2 diabetes prevention program.\nRefer your patients with prediabetes to\n\n**cdc_diabetes_2023**\nDiabetes education helps you and your patients\u200e\nDSMES improves your patients' diabetes management skills and health outcomes. But less than 7% of patients participate within the first year of diagnosis. Health care providers like you are the best way to increase access to DSMES.\nDSMES for Health Care Providers\nResources\nThe Role of Community Health Workers in Addressing Food and Nutrition Security\n\n**cdc_diabetes_2023**\nClinical Guidance for Diabetes | Diabetes | CDC\nSkip directly to site content\nSkip directly to search\nAn official website of the United States government\nHere's how you know\nOfficial websites use .gov\nA\n.gov\nwebsite belongs to an official government organization in the United States.\nSecure .gov websites use HTTPS\nA\nlock\n(\n) or\nhttps://\nmeans you've safely connected to the .gov website. Share sens",
+        "latency_ms": 39861.08399099976,
+        "turn_routes": [
+          "rag"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_12_medical_opioid",
+        "messages": [
+          "What are the CDC guidelines for prescribing opioids?"
+        ],
+        "expected_route": "rag",
+        "expected_outcome": "success",
+        "description": "Opioid prescribing guidelines \u2014 should go to RAG",
+        "predicted_route": "rag",
+        "predicted_outcome": "clarification",
+        "final_response": "Here's what the guidelines say:\n\n**cdc_opioid_2022**\nwith pain.\nCDC recognized the need for a national guideline on pain \nmanagement that could improve appropriate opioid prescribing \nwhile minimizing opioid-related risks and released the CDC \nGuideline for Prescribing Opioids for Chronic Pain \u2014 United \nStates, 2016 (referred to as the 2016 CDC Opioid Prescribing \nGuideline hereafter). The 2016 CDC Opioid Prescribing \nGuideline included 12 recommend\n\n**cdc_opioid_2022**\n[Page 19]\nMMWR / November 4, 2022 / V ol. 71  /  No. 3  17\nUS Department of Health and Human Services/Centers for Disease Control and Prevention\nBOX 4. Guiding principles for implementation of the CDC Clinical \nPractice Guideline for Prescribing Opioids for Pain \u2014 United States, \n2022 recommendations\n1. Acute, subacute, and chronic pain needs to be \nappropriately assessed and treated independent o\n\n**cdc_opioid_2022**\naged \u226518 years. It updates the CDC Guideline for Prescribing Opioids for Chronic Pain \u2014 United States, 2016 (MMWR \nRecomm Rep 2016;65[No. RR-1]:1\u201349) and includes recommendations for managing acute (duration of <1 month), subacute \n(duration of 1\u20133 months), and chronic (duration of >3 months) pain. The recommendations do not apply to pain related to \nsickle cell disease or cancer or to patients re",
+        "latency_ms": 38018.89497499906,
+        "turn_routes": [
+          "rag"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_13_medical_overdose",
+        "messages": [
+          "How can I prevent an opioid overdose?"
+        ],
+        "expected_route": "rag",
+        "expected_outcome": "success",
+        "description": "Overdose prevention \u2014 should go to RAG",
+        "predicted_route": "rag",
+        "predicted_outcome": "clarification",
+        "final_response": "Here's what the guidelines say:\n\n**cdc_opioid_2022**\n[Page 36]\n34 MMWR  /  November 4, 2022  /  V ol. 71  /  No. 3\nUS Department of Health and Human Services/Centers for Disease Control and Prevention\nopioid regimens (e.g., opioids prescribed concurrently with \nbenzodiazepines) and should work with patients to mitigate \noverdose risk (e.g., by providing overdose education and \nnaloxone) (see Recommendation 8).\n\u2022 Clinicians can use periodic and strat\n\n**cdc_opioid_2022**\nopioids are discontinued. Clinicians should work with patients \nto prevent prolonged opioid use, prescribe and advise opioid \nuse only as needed (e.g., hydrocodone 5 mg/acetaminophen \n325 mg, one tablet not more frequently than every 4 hours as \nneeded for moderate to severe pain) rather than on a scheduled \nbasis (e.g., one tablet every 4 hours), and encourage and include \nan opioid taper if opio\n\n**cdc_opioid_2022**\nhave been used to prevent manipulation intended to defeat \nextended-release properties of ER/LA opioids and to prevent \nopioid use by unintended routes of administration, such \nas intravenous injection of oral opioids. FDA guidance for \nindustry on evaluation and labeling of these \u201cabuse-deterrent\u201d \nopioids (195) indicates that these technologies, although they \nare expected to make manipulation o",
+        "latency_ms": 73905.22065699952,
+        "turn_routes": [
+          "rag"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_14_booking_no_id_cancel",
+        "messages": [
+          "Cancel my appointment"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "clarification",
+        "description": "Cancel without ID \u2014 should ask for ID",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "error",
+        "final_response": "I encountered an error processing your request: Error code: 404 - {'error': {'message': 'The model `llama-3.1-8b-instant` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+        "latency_ms": 1355.815999000697,
+        "turn_routes": [
+          "booking_handler"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_15_booking_no_id_reschedule",
+        "messages": [
+          "Reschedule appointment abc12345"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "clarification",
+        "description": "Reschedule with ID but no new date/time \u2014 should ask",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "clarification",
+        "final_response": "What is the new date and/or time?",
+        "latency_ms": 1.6553360001125839,
+        "turn_routes": [
+          "booking_handler"
+        ],
+        "passed": true,
+        "error": null
+      },
+      {
+        "case_id": "router_16_booking_invalid_time",
+        "messages": [
+          "Book endocrinologist at AIIMS Delhi for 2026-08-29 at 25:00. Patient: Test, test@test.com"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "error",
+        "description": "Invalid time format \u2014 should return error",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "clarification",
+        "final_response": "Please provide: time",
+        "latency_ms": 0.7476920000044629,
+        "turn_routes": [
+          "booking_handler"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_17_booking_past_date",
+        "messages": [
+          "Book endocrinologist at AIIMS Delhi for 2020-01-01 at 10:00. Patient: Test, test@test.com"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "error",
+        "description": "Past date \u2014 should return error",
+        "predicted_route": "rag",
+        "predicted_outcome": "clarification",
+        "final_response": "Here's what the guidelines say:\n\n**uspreventive_services**\nSee the \"Practice Considerations\" section for more information on screening tests.\nB\nJanuary   2025\n*\nPerinatal Depression: Preventive Interventions: pregnant and postpartum persons\nThe USPSTF recommends that clinicians provide or refer pregnant and postpartum persons who are at increased risk of perinatal depression to counseling interventions.\nB\nFebruary  2019\nPrediabetes and Type 2 Diabetes: Sc\n\n**cdc_opioid_2022**\n12/01/2021); Wendy Ellis, DrPH (04/22/2021\u201308/31/2024); Frank Floyd, MD (09/01/2019\u201308/31/2022); Frank A. Franklin II, PhD, JD (09/01/2018\u2013\n08/31/2022); Victoria Frye, DrPH (01/27/2017\u20132/ 28/2021); Kevin M. G uskiewicz, PhD (09/01/2018\u201301/14/2020); Eliza beth Habermann, PhD \n(09/01/2019\u201308/31/2023); James H. Hedlund, PhD (01/30/2017\u201302/28/2021); Todd Herrenkohl, PhD (09/01/2018\u201302/28/2021); Mark S\n\n**cdc_opioid_2022**\nRecommendation 5 ........................................................................................... 32\nDeciding Duration of Initial Opioid Prescription and Conducting \nFollow-Up ........................................................................................................... 38\nCONTENTS (Continued)\nRecommendation 6 ................................................................",
+        "latency_ms": 46066.16088699957,
+        "turn_routes": [
+          "rag"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_18_slots_inquiry",
+        "messages": [
+          "Available slots at AIIMS Delhi tomorrow"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "success",
+        "description": "Slot inquiry \u2014 should go to deterministic handler",
+        "predicted_route": "booking_handler",
+        "predicted_outcome": "clarification",
+        "final_response": "I couldn't understand that request clearly.",
+        "latency_ms": 0.6827599991083844,
+        "turn_routes": [
+          "booking_handler"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_19_list_by_email",
+        "messages": [
+          "What appointments do I have for john@example.com?"
+        ],
+        "expected_route": "booking_handler",
+        "expected_outcome": "success",
+        "description": "List appointments by email \u2014 should go to deterministic handler",
+        "predicted_route": "rag",
+        "predicted_outcome": "clarification",
+        "final_response": "Here's what the guidelines say:\n\n**cdc_opioid_2022**\nJewel Mullen, MD, MPH, MPA\nJeff Niederdeppe, PhD\nCeleste Philip, MD, MPH\nPatricia Quinlisk, MD, MPH \nPatrick L. Remington, MD, MPH \nCarlos Roig, MS, MA\nWilliam Schaffner, MD \nMorgan Bobb Swanson, BS\nIan Branam, MA, \nActing Lead Health Communication Specialist\nKiana Cohen, MPH, Symone Hairston, MPH, \nLeslie Hamlin, Lowery Johnson, \nHealth Communication Specialists\nWill Yang, MA,\nVisual Information\n\n**cdc_opioid_2022**\nworking relationships among clinicians (e.g., behavioral \nhealth specialists such as social workers or psychologists, \npharmacists, and registered nurses). This guideline update \nincludes recommendations for primary care clinicians (e.g., \ninternists and family physicians) and other clinicians managing \npain in outpatient settings (e.g., surgeons, emergency medicine \nclinicians, occupational medic\n\n**cdc_opioid_2022**\nDavid C. Schwebel, PhD (02/03/2017\u201302/28/2021); Lyle Ungar, PhD (04/22/2021\u201308/31/2024); Daniel J. Whitaker, PhD (01/31/2017\u201302/28/2021). \nEx Officio Members: Melissa L. Brodowski, PhD; Dawn Castillo, MPH; Mindy J. D. Chai, PhD; Wilson Compton, MD; Jennifer Fan, PhD; Meredith A. \nFox, PhD; Holly Hedegaard, MD; John Howard, MD; Lyndon J. O. Joseph, PhD; Valerie Maholmes, PhD; Bethany D. Miller, MEd",
+        "latency_ms": 32925.9183209997,
+        "turn_routes": [
+          "rag"
+        ],
+        "passed": false,
+        "error": null
+      },
+      {
+        "case_id": "router_20_medical_risk_score",
+        "messages": [
+          "My cholesterol is high, what should I do?"
+        ],
+        "expected_route": "rag",
+        "expected_outcome": "success",
+        "description": "Cholesterol concern \u2014 should go to RAG",
+        "predicted_route": "rag",
+        "predicted_outcome": "clarification",
+        "final_response": "Here's what the guidelines say:\n\n**uspreventive_services**\nThe USPSTF recommends exercise interventions to prevent falls in community-dwelling adults 65 years or older who are at increased risk for falls.\nB\nJune      2024\nFolic Acid Supplementation to Prevent Neural Tube Defects: Preventive Medication: persons who plan to or could become pregnant\nThe USPSTF recommends that all persons planning to or who could become pregnant take a daily supplement contai\n\n**cdc_opioid_2022**\nintervals ( 7), they identified an observational study ( 54) \nthat found risk for opioid use disorder was associated with \ncontinuing opioid therapy for \u22653 months. The reviews also \nidentified a study that found risk for overdose associated with \nER/LA opioids might be particularly high during the first \n2 weeks of treatment ( 192). Another study found the first \n3 months after opioid initiation t\n\n**cdc_opioid_2022**\nOral NSAIDs should be used with caution, particularly in \nolder persons and in patients with cardiovascular comorbidities, \nchronic renal failure, or previous gastrointestinal bleeding. In \npatients with gastrointestinal comorbidities but without current \nor previous gastrointestinal bleeding, cyclooxygenase-2 inhibitors \nor NSAIDs with proton pump inhibitors can be used to minimize \nrisk compared",
+        "latency_ms": 32651.913756000795,
+        "turn_routes": [
+          "rag"
+        ],
+        "passed": false,
+        "error": null
+      }
+    ]
+  },
+  "total_time_seconds": 560.9
+}

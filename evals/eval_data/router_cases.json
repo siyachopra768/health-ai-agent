@@ -1,0 +1,152 @@
+{
+  "description": "End-to-end hybrid router test cases with expected routing paths and outcomes",
+  "version": "1.0",
+  "cases": [
+    {
+      "id": "router_01_booking_full",
+      "messages": ["Book an endocrinologist at AIIMS Delhi for 2026-08-29 at 10:00. Patient: John Doe, john@example.com"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "success",
+      "description": "Full booking with all details — should go to deterministic handler"
+    },
+    {
+      "id": "router_02_search_hospitals",
+      "messages": ["Find endocrinologists in Delhi"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "success",
+      "description": "Hospital search — should go to deterministic handler"
+    },
+    {
+      "id": "router_03_medical_rag",
+      "messages": ["What does high cholesterol mean and what are the treatment options?"],
+      "expected_route": "rag",
+      "expected_outcome": "success",
+      "description": "Medical question — should go to RAG retrieval"
+    },
+    {
+      "id": "router_04_non_medical_decline",
+      "messages": ["What's the weather like today?"],
+      "expected_route": "llm_fallback",
+      "expected_outcome": "clarification",
+      "description": "Non-medical, non-booking — should decline or fall back to LLM"
+    },
+    {
+      "id": "router_05_cancel_appointment",
+      "messages": ["Cancel appointment abc12345"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "success",
+      "description": "Cancel with ID — should go to deterministic handler"
+    },
+    {
+      "id": "router_06_reschedule",
+      "messages": ["Reschedule appointment abc12345 to tomorrow at 11:00"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "success",
+      "description": "Reschedule with all details — should go to deterministic handler"
+    },
+    {
+      "id": "router_07_list_appointments",
+      "messages": ["Show my upcoming appointments"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "success",
+      "description": "List appointments — should go to deterministic handler"
+    },
+    {
+      "id": "router_08_booking_vague_needs_clarification",
+      "messages": ["Book an appointment"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "clarification",
+      "description": "Vague booking — should ask for missing details via deterministic handler"
+    },
+    {
+      "id": "router_09_multiturn_booking_choose_hospital",
+      "messages": [
+        "I need an endocrinologist in Delhi",
+        "2"
+      ],
+      "expected_route": "booking_handler",
+      "expected_outcome": "clarification",
+      "description": "Multi-turn: first asks for hospital, user picks option 2"
+    },
+    {
+      "id": "router_10_multiturn_booking_provide_info",
+      "messages": [
+        "Book endocrinologist at AIIMS Delhi for 2026-08-29 at 10:00",
+        "John Doe john@example.com"
+      ],
+      "expected_route": "booking_handler",
+      "expected_outcome": "success",
+      "description": "Multi-turn: booking prompt, user provides patient name and email"
+    },
+    {
+      "id": "router_11_medical_diabetes",
+      "messages": ["How can I prevent type 2 diabetes?"],
+      "expected_route": "rag",
+      "expected_outcome": "success",
+      "description": "Diabetes prevention question — should go to RAG"
+    },
+    {
+      "id": "router_12_medical_opioid",
+      "messages": ["What are the CDC guidelines for prescribing opioids?"],
+      "expected_route": "rag",
+      "expected_outcome": "success",
+      "description": "Opioid prescribing guidelines — should go to RAG"
+    },
+    {
+      "id": "router_13_medical_overdose",
+      "messages": ["How can I prevent an opioid overdose?"],
+      "expected_route": "rag",
+      "expected_outcome": "success",
+      "description": "Overdose prevention — should go to RAG"
+    },
+    {
+      "id": "router_14_booking_no_id_cancel",
+      "messages": ["Cancel my appointment"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "clarification",
+      "description": "Cancel without ID — should ask for ID"
+    },
+    {
+      "id": "router_15_booking_no_id_reschedule",
+      "messages": ["Reschedule appointment abc12345"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "clarification",
+      "description": "Reschedule with ID but no new date/time — should ask"
+    },
+    {
+      "id": "router_16_booking_invalid_time",
+      "messages": ["Book endocrinologist at AIIMS Delhi for 2026-08-29 at 25:00. Patient: Test, test@test.com"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "error",
+      "description": "Invalid time format — should return error"
+    },
+    {
+      "id": "router_17_booking_past_date",
+      "messages": ["Book endocrinologist at AIIMS Delhi for 2020-01-01 at 10:00. Patient: Test, test@test.com"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "error",
+      "description": "Past date — should return error"
+    },
+    {
+      "id": "router_18_slots_inquiry",
+      "messages": ["Available slots at AIIMS Delhi tomorrow"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "success",
+      "description": "Slot inquiry — should go to deterministic handler"
+    },
+    {
+      "id": "router_19_list_by_email",
+      "messages": ["What appointments do I have for john@example.com?"],
+      "expected_route": "booking_handler",
+      "expected_outcome": "success",
+      "description": "List appointments by email — should go to deterministic handler"
+    },
+    {
+      "id": "router_20_medical_risk_score",
+      "messages": ["My cholesterol is high, what should I do?"],
+      "expected_route": "rag",
+      "expected_outcome": "success",
+      "description": "Cholesterol concern — should go to RAG"
+    }
+  ]
+}

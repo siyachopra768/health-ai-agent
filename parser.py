@@ -3,6 +3,7 @@ from pypdf import PdfReader
 import re
 import json
 import os
+import io
 from groq import Groq
 from verifier import parse_reference_range,verify_value_against_source
 import logging
@@ -15,6 +16,8 @@ class LabValueExtractor:
 
 
     def load_pdf(self, file) -> str:
+        if isinstance(file,bytes):
+            file = io.BytesIO(file)
         reader = PdfReader(file)
         text = ""
         for page in reader.pages:
@@ -114,7 +117,7 @@ Rules:
 - Return empty JSON {} if nothing can be extracted"""
         try:
             response = self.client.chat.completions.create(
-                model="llama-3.1-8b-instant",
+                model="llama-3.3-70b-versatile",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": f"Extract lab values from this report:\n\n{text[:3000]}"}

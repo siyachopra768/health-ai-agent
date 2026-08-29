@@ -26,7 +26,7 @@ from pathlib import Path
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
 
-from appointment_agent import create_appointment_agent, run_agent
+from booking_appointment.appointment_agent import create_appointment_agent, run_agent
 from langchain_core.messages import ToolMessage, AIMessage
 
 
