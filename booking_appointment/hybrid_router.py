@@ -80,7 +80,7 @@ class HybridRouter:
     5. Else -> fall back to the LangGraph booking agent.
     """
     api_base: str = "http://localhost:8001"
-    llm_model: str = "llama-3.1-8b-instant"
+    llm_model: str = "openai/gpt-oss-20b"
     llm_temperature: float = 0.0
 
     def __post_init__(self):

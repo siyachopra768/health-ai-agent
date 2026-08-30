@@ -281,7 +281,7 @@ Guidelines:
 - After getting tool results, respond to the user directly without calling more tools unless the user asks for something new.
 """
 
-def create_appointment_agent(model_name: str = "llama-3.1-8b-instant", temperature: float = 0):
+def create_appointment_agent(model_name: str = "openai/gpt-oss-20b", temperature: float = 0):
     """Create the LangGraph react agent for appointment booking."""
     llm = ChatGroq(
         model_name=model_name,

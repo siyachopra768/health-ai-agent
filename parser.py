@@ -117,7 +117,7 @@ Rules:
 - Return empty JSON {} if nothing can be extracted"""
         try:
             response = self.client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model="openai/gpt-oss-20b",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": f"Extract lab values from this report:\n\n{text[:3000]}"}
@@ -156,4 +156,8 @@ Rules:
             return verified
 
         except json.JSONDecodeError:
+            logging.error("JSON decode error parsing LLM response")
+            return {}
+        except Exception as e:
+            logging.error(f"LLM extraction error: {type(e).__name__}: {e}")
             return {}
