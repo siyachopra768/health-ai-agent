@@ -5,3 +5,4 @@ groq
 python-dotenv
 pydantic
 pypdf
+rank_bm25==0.2.2
