@@ -126,10 +126,24 @@ Rules:
                 max_tokens=1000,
             )
 
-            raw = response.choices[0].message.content.strip()
+            raw = response.choices[0].message.content
+            if raw is None:
+                logging.error("LLM returned None content")
+                return {}
+            raw = raw.strip()
+            if not raw:
+                logging.error("LLM returned empty response")
+                return {}
             raw = re.sub(r"```json|```", "", raw).strip()
-            logging.info(f"LLM_RAW_RESPONSE: {raw[:500]}") 
-            parsed = json.loads(raw)
+            logging.info(f"LLM_RAW_RESPONSE: {raw[:500]}")
+            if not raw.startswith("{"):
+                logging.error(f"LLM response doesn't appear to be JSON: starts with '{raw[:100]}'")
+                return {}
+            try:
+                parsed = json.loads(raw)
+            except json.JSONDecodeError as e:
+                logging.error(f"JSON decode failed: {e}, raw: {raw[:500]}")
+                return {}
 
             validated = {}
             for name, vals in parsed.items():
